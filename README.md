@@ -4,9 +4,6 @@ Apply GitOps to everything with Flux and Crossplane.
 
 ## Prerequisites
 
-You will need a Kubernetes cluster version 1.21 or newer.
-For a quick local test, you can use [Kubernetes kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
-
 In order to follow the guide you'll need a GitHub account and a personal access token that can create repositories
 (check all permissions under repo).
 
@@ -20,6 +17,40 @@ Or install the CLI by downloading precompiled binaries using a Bash script:
 
 ```sh
 curl -s https://fluxcd.io/install.sh | sudo bash
+```
+
+You will need a Kubernetes cluster version 1.21 or newer.
+
+### Local Kubernetes
+
+For a quick local test, you can use [Kubernetes kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
+
+```sh
+$ brew install kind
+$ kind create cluster --name production
+$ kind create cluster --name staging
+$ kind get clusters
+production
+staging
+```
+
+To switch between clusters:
+
+```sh
+# kubectl will connect to the production cluster
+kubectl cluster-info --context production
+# kubectl will connect to the staging cluster
+kubectl cluster-info --context staging
+```
+
+Alternatively, you can use a tool like `kubectx` (`brew install kubectx`):
+
+```sh
+$ kubectx
+kind-production
+kind-staging
+$ kubectx kind-production
+Switched to context "kind-production".
 ```
 
 ## Repository structure
