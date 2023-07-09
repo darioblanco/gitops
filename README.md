@@ -293,12 +293,22 @@ spec:
 Note that with `path: ./apps/staging` we configure Flux to sync the staging Kustomize overlay and
 with `dependsOn` we tell Flux to create the infrastructure items before deploying the apps.
 
-Fork this repository on your personal GitHub account and export your GitHub access token, username and repo name:
+Export your GitHub access token, username and repo name:
 
 ```sh
 export GITHUB_TOKEN=<your-token>
 export GITHUB_USER=<your-username>
 export GITHUB_REPO=<repository-name>
+```
+
+Alternatively:
+
+```sh
+cp .envrc.example .envrc
+# Fill the .envrc with your GITHUB_* variables
+source .envr
+# or
+direnv allow
 ```
 
 Verify that your staging cluster satisfies the prerequisites with:
@@ -307,7 +317,8 @@ Verify that your staging cluster satisfies the prerequisites with:
 flux check --pre
 ```
 
-Set the kubectl context to your staging cluster and bootstrap Flux:
+Set the kubectl context to your staging cluster and bootstrap Flux
+(use `kind-staging` in the context flag if running a cluster locally with kind):
 
 ```sh
 flux bootstrap github \
@@ -346,7 +357,8 @@ $ curl -H "Host: podinfo.staging" http://localhost:8080
 }
 ```
 
-Bootstrap Flux on production by setting the context and path to your production cluster:
+Bootstrap Flux on production by setting the context and path to your production cluster
+(use `kind-production` in the context flag if running a cluster locally with kind):
 
 ```sh
 flux bootstrap github \
@@ -443,7 +455,8 @@ Push the changes to the main branch:
 git add -A && git commit -m "add dev cluster" && git push
 ```
 
-Set the kubectl context and path to your dev cluster and bootstrap Flux:
+Set the kubectl context and path to your dev cluster and bootstrap Flux
+(use `kind-dev` in the context flag if running a cluster locally with kind):
 
 ```sh
 flux bootstrap github \
