@@ -1,75 +1,27 @@
 # gitops
 
-Apply GitOps to everything with Flux and Crossplane.
-
-## Prerequisites
-
-In order to follow the guide you'll need a GitHub account and a personal access token that can create repositories
-(check all permissions under repo).
-
-Install the Flux CLI on MacOS or Linux using Homebrew:
-
-```sh
-brew install fluxcd/tap/flux
-```
-
-Or install the CLI by downloading precompiled binaries using a Bash script:
-
-```sh
-curl -s https://fluxcd.io/install.sh | sudo bash
-```
-
-You will need a Kubernetes cluster version 1.21 or newer.
-
-### Local Kubernetes
-
-For a quick local test, you can use [Kubernetes kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
-
-```sh
-$ brew install kind
-$ kind create cluster --name production
-$ kind create cluster --name staging
-$ kind get clusters
-production
-staging
-```
-
-To switch between clusters:
-
-```sh
-# kubectl will connect to the production cluster
-kubectl cluster-info --context production
-# kubectl will connect to the staging cluster
-kubectl cluster-info --context staging
-```
-
-Alternatively, you can use a tool like `kubectx` (`brew install kubectx`):
-
-```sh
-$ kubectx
-kind-production
-kind-staging
-$ kubectx kind-production
-Switched to context "kind-production".
-```
+Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](https://www.crossplane.io/).
 
 ## Repository structure
 
 The Git repository contains the following top directories:
 
-- **apps** dir contains Helm releases with a custom configuration per cluster
-- **infrastructure** dir contains common infra tools such as ingress-nginx and cert-manager
-- **clusters** dir contains the Flux configuration per cluster
+- **apps** dir contains Helm releases with a custom configuration per cluster.
+- **kind** dir contains kind configurations to create your local clusters for testing. See [kind/README](./kind/README.md).
+- **infrastructure** dir contains common infra tools such as ingress-nginx and cert-manager.
+- **clusters** dir contains the Flux configuration per cluster.
 
 ```text
 ├── apps
 │   ├── base
 │   ├── production
 │   └── staging
+├── kind
 ├── infrastructure
 │   ├── configs
 │   └── controllers
 └── clusters
+    ├── crossplane
     ├── production
     └── staging
 ```
@@ -306,8 +258,8 @@ Alternatively:
 ```sh
 cp .envrc.example .envrc
 # Fill the .envrc with your GITHUB_* variables
-source .envr
-# or
+source .envrc
+# Or if you have `direnv`
 direnv allow
 ```
 
