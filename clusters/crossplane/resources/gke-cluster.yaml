@@ -1,0 +1,44 @@
+# API Reference: https://doc.crds.dev/github.com/crossplane/provider-gcp/container.gcp.crossplane.io/Cluster/v1beta2@v0.22.0
+apiVersion: container.gcp.crossplane.io/v1beta1
+kind: GKECluster
+metadata:
+  name: gke-crossplane-cluster
+spec:
+  forProvider:
+    initialClusterVersion: "1.27"
+    network: "projects/development-labs/global/networks/opsnet"
+    subnetwork: "projects/development-labs/regions/us-central1/subnetworks/opsnet"
+    ipAllocationPolicy:
+      useIpAliases: true
+    defaultMaxPodsConstraint:
+      maxPodsPerNode: 110
+    addonsConfig:
+      cloudRunConfig:
+        disabled: true
+      dnsCacheConfig:
+        enabled: false
+      gcePersistentDiskCsiDriverConfig:
+        enabled: true
+      horizontalPodAutoscaling:
+        disabled: true
+      httpLoadBalancing:
+        disabled: false
+      istioConfig:
+        disabled: true
+        auth: "AUTH_NONE"
+      kalmConfig:
+        enabled: false
+      kubernetesDashboard:
+        disabled: true
+      networkPolicyConfig:
+        disabled: false
+    location: us-central1-a
+    binaryAuthorization:
+      enabled: false
+    legacyAbac:
+      enabled: false
+    loggingService: "none"
+    masterAuth:
+      clientCertificateConfig:
+        issueClientCertificate: false
+    monitoringService: "none"

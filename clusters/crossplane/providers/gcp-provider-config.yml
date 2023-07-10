@@ -1,0 +1,12 @@
+apiVersion: gcp.upbound.io/v1beta1
+kind: ProviderConfig # customizes the settings of the GCP Provider
+metadata:
+  name: default
+spec:
+  projectID: <PROJECTID> # find your GCP project ID from the project_id field of the gcp-credentials.json file
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: gcp-secret
+      key: creds
