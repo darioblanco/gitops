@@ -4,6 +4,9 @@ metadata:
   name: fastapi-example
   namespace: fastapi-example
 spec:
+  interval: 1m
+  prune: true
   sourceRef:
     kind: GitRepository
     name: fastapi-example
+  validation: client
