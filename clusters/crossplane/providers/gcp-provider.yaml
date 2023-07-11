@@ -1,6 +1,0 @@
-apiVersion: pkg.crossplane.io/v1
-kind: Provider # uses the Crossplane Provider CRD to connect your Kubernetes cluster to your cloud provider.
-metadata:
-  name: upbound-provider-gcp
-spec:
-  package: xpkg.upbound.io/upbound/provider-gcp:v0.28.0

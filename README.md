@@ -7,23 +7,28 @@ Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](http
 The Git repository contains the following top directories:
 
 - **apps** dir contains Helm releases with a custom configuration per cluster.
-- **kind** dir contains kind configurations to create your local clusters for testing. See [kind/README](./kind/README.md).
-- **infrastructure** dir contains common infra tools such as ingress-nginx and cert-manager.
 - **clusters** dir contains the Flux configuration per cluster.
+- **infrastructure** dir contains common infra tools such as ingress-nginx and cert-manager.
+- **kind** dir contains kind configurations to create your local clusters for testing. See [kind/README](./kind/README.md).
+- **crossplane** dir contains [Crossplane](https://www.crossplane.io/) definitions. See [crossplane/README](./kind/README.md)
 
 ```text
 ├── apps
 │   ├── base
 │   ├── production
 │   └── staging
-├── kind
+├── clusters
+│   ├── crossplane
+│   ├── production
+│   └── staging
+├── crossplane
+│   ├── providers
+│   └── resources
 ├── infrastructure
 │   ├── configs
 │   └── controllers
-└── clusters
-    ├── crossplane
-    ├── production
-    └── staging
+├── kind
+└── scripts
 ```
 
 ### Applications

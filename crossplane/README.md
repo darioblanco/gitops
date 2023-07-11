@@ -22,16 +22,9 @@ The folder contains the following top directories:
 
 ## Provision a GKE cluster
 
-To provision a GKE cluster, first set your `kubectl` context to the cluster holding Crossplane.
+Steps to provision a Crossplane cluster so that it can manage GKE resources.
 
 ### 1. Install the GCP provider
-
-```sh
-$ kubectl apply -f providers/gcp-provider.yaml
-$ kubectl get providers
-NAME                   INSTALLED   HEALTHY   PACKAGE                                        AGE
-upbound-provider-gcp   True        True      xpkg.upbound.io/upbound/provider-gcp:v0.28.0   107s
-```
 
 A provider installs their own Kubernetes Custom Resource Definitions (CRDs). These CRDs allow you to create GCP resources directly inside Kubernetes.
 
@@ -45,22 +38,12 @@ Providers use a Kubernetes Secret to connect the credentials to the provider.
 For basic user authentication, use a Google Cloud service account JSON file.
 See the [GCP Docs](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 
-Save the JSON file as `gcp-credentials.json`, then:
-
-```sh
-kubectl create secret \
-generic gcp-secret \
--n crossplane-system \
---from-file=creds=./gcp-credentials.json
-```
+Save the JSON file as `gcp-credentials.json`. Its base64 encoded value is the one that will go
+to the secret.
 
 ### 3. Create a ProviderConfig
 
 A `ProviderConfig` customizes the settings of the GCP Provider.
-
-```sh
-kubectl apply -f providers/gcp-provider-config.yaml
-```
 
 ### 4. Create a Managed Resource (MR)
 
@@ -68,10 +51,6 @@ Now that the provider is configured we can create Kubernetes resources so Crossp
 defines the required state in our target cloud provider.
 
 The `./resources/` folder has some managed resource examples.
-
-```sh
-kubectl apply -f resources/bucket/yaml
-```
 
 ## Resources
 

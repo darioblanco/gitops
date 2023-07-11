@@ -1,0 +1,31 @@
+---
+apiVersion: gcp.upbound.io/v1beta1
+kind: ProviderConfig # customizes the settings of the GCP Provider
+metadata:
+  name: default
+  namespace: crossplane-system
+spec:
+  projectID: <PROJECTID> # find your GCP project ID from the project_id field of the gcp-credentials.json file
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: gcp-secret
+      key: creds
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gcp-secret
+  namespace: crossplane-system
+type: Opaque
+data:
+  credentials: <some_base64_encoded_value_here> # gcp-credentials.json file content goes here in base64 format
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider # uses the Crossplane Provider CRD to connect your Kubernetes cluster to your cloud provider.
+metadata:
+  name: upbound-provider-gcp
+  namespace: crossplane-system
+spec:
+  package: xpkg.upbound.io/upbound/provider-gcp:v0.28.0

@@ -1,3 +1,11 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gcp-buckets
+  labels:
+    toolkit.fluxcd.io/tenant: sre-team
+---
 apiVersion: storage.gcp.upbound.io/v1beta1
 kind: Bucket
 metadata:
