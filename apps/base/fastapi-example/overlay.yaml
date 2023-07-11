@@ -2,7 +2,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: fastapi-example
+  namespace: fastapi-example
 spec:
   sourceRef:
     kind: GitRepository
-    name: app
+    name: fastapi-example

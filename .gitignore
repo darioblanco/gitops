@@ -3,3 +3,6 @@ bin/
 
 # Environment variables with secrets
 .envrc
+
+# Other
+output.yaml

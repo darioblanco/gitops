@@ -5,7 +5,23 @@ MAKEFLAGS += --no-builtin-variables
 
 .PHONY: flux-ui help init
 
-flux-ui: ## port-forward to the current kubernetes cluster so flux UI can be accessed in http://localhost:9001
+cluster-staging-create: init # create a local staging cluster with kind and sync with flux
+	kind create cluster --name staging --config kind/staging.yaml
+	kubectl cluster-info --context kind-staging
+	source .envrc
+	flux bootstrap github \
+		--context=kind-staging \
+		--owner=${GITHUB_USER} \
+		--repository=${GITHUB_REPO} \
+		--branch=main \
+		--personal \
+		--path=clusters/staging
+	watch flux get helmreleases --all-namespaces
+
+cluster-staging-delete: init # deletes the local staging cluster
+	kind delete cluster --name staging
+
+flux-ui: init ## port-forward to the current kubernetes cluster so flux UI can be accessed in http://localhost:9001
 	kubectl -n flux-system port-forward svc/weave-gitops 9001:9001
 
 help: ## list available commands

@@ -34,11 +34,11 @@ To switch between clusters:
 
 ```sh
 # kubectl will connect to the crossplane cluster and create its context
-kubectl cluster-info --context crossplane
+kubectl cluster-info --context kind-crossplane
 # kubectl will connect to the production cluster and create its context
-kubectl cluster-info --context production
+kubectl cluster-info --context kind-production
 # kubectl will connect to the staging cluster and create its context
-kubectl cluster-info --context staging
+kubectl cluster-info --context kind-staging
 ```
 
 Alternatively, you can use a tool like `kubectx` (`brew install kubectx`):

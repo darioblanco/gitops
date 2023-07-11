@@ -3,7 +3,4 @@ kind: Kustomization
 metadata:
   name: fastapi-example
 spec:
-  sourceRef:
-    kind: GitRepository
-    name: fastapi-example
   path: ./deploy/staging
