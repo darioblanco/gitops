@@ -4,4 +4,4 @@ namespace: podinfo
 resources:
   - ../../base/fastapi-example
 patchesStrategicMerge:
-  - fastapi-example-values.yaml
+  - overlay.yaml
