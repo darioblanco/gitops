@@ -1,0 +1,8 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: fastapi-example
+spec:
+  url: https://github.com/darioblanco/fastapi-example
+  ref:
+    branch: main
