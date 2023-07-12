@@ -26,6 +26,8 @@ jobs:
           config: kind/staging.yaml
       - name: Install Flux in Kubernetes Kind
         run: flux install --verbose
+      - name: Verify Flux Installation
+        run: flux check --pre
       - name: Output helm releases
         run: flux get helmreleases --all-namespaces
       - name: Output kustomizations
@@ -39,7 +41,7 @@ jobs:
           flux create kustomization flux-system \
           --source=flux-system \
           --path=./clusters/staging \
-          --timeout=10m \
+          --timeout=3m \
           --verbose
       - name: Verify cluster reconciliation
         run: |
