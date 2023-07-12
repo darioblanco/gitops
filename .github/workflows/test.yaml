@@ -1,11 +1,17 @@
 name: test
 
 on:
-  workflow_dispatch:
   pull_request:
+    paths:
+      - "*.yaml"
+      - "*.yml"
   push:
-    branches: [ '*' ]
-    tags-ignore: [ '*' ]
+    paths:
+      - "*.yaml"
+      - "*.yml"
+    branches: ["*"]
+    tags-ignore: ["*"]
+  workflow_dispatch:
 
 jobs:
   manifests:
@@ -20,4 +26,4 @@ jobs:
       - name: Setup kustomize
         uses: fluxcd/pkg/actions/kustomize@main
       - name: Validate manifests
-        run: ./scripts/validate.sh
+        run: make validate

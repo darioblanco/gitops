@@ -9,7 +9,7 @@ metadata:
 apiVersion: storage.gcp.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  generateName: crossplane-bucket-
+  name: crossplane-bucket-example
   labels:
     docs.crossplane.io/example: provider-gcp
 spec:

@@ -37,5 +37,9 @@ init: ## verify that all the required commands are already installed
 		} ;\
 		cmd flux ;\
 		cmd kind ;\
+		cmd kubeconform ;\
 		cmd kubectl ;\
 	fi
+
+validate: init # validate the flux custom resources and kustomize overlays using kubeconform
+	./scripts/validate.sh
