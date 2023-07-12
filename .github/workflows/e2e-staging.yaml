@@ -1,10 +1,15 @@
-name: e2e
+name: e2e staging cluster
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ '*' ]
-    tags-ignore: [ '*' ]
+    paths:
+      - "apps/base/**"
+      - "apps/staging/**"
+      - "clusters/staging/**"
+      - "infrastructure/**"
+    branches: ["*"]
+    tags-ignore: ["*"]
+  workflow_dispatch:
 
 jobs:
   kubernetes:
@@ -17,10 +22,11 @@ jobs:
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.7.0
         with:
-          cluster_name: flux
+          cluster_name: staging
+          config: kind/staging.yaml
       - name: Install Flux in Kubernetes Kind
         run: flux install
-      - name: Setup cluster reconciliation
+      - name: Setup cluster reconciliation based on the staging manifests
         run: |
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
@@ -35,6 +41,7 @@ jobs:
           kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
       - name: Verify helm reconciliation
         run: |
+          kubectl -n podinfo wait helmrelease/fastapi-example --for=condition=ready --timeout=5m
           kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
       - name: Debug failure
         if: failure()
