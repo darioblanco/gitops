@@ -27,15 +27,22 @@ jobs:
         run: flux install
       - name: Verify Flux Installation
         run: flux check --pre
-      - name: Get all kubernetes resources
+      - name: Debug kubernetes resources
+        if: github.action == 'debug'
         run: kubectl get all --all-namespaces
+      - name: Debug kubernetes contexts
+        if: github.action == 'debug'
+        run: kubectl config get-contexts
       - name: Output helm releases
-        run: flux get helmreleases --all-namespaces
+        if: github.action == 'debug'
+        run: flux get helmreleases  --context kind-staging --all-namespaces
       - name: Output kustomizations
-        run: flux get kustomizations --all-namespaces
+        if: github.action == 'debug'
+        run: flux get kustomizations --context kind-staging --all-namespaces
       - name: Setup cluster reconciliation
         run: |
           flux create source git flux-system \
+          --context=kind-staging \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
           --ignore-paths="./clusters/**/flux-system/"
