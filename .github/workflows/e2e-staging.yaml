@@ -28,7 +28,6 @@ jobs:
       - name: Verify Flux Installation
         run: flux check --pre
       - name: Debug kubernetes resources
-        if: github.action == 'debug'
         run: kubectl get all --all-namespaces
       - name: Debug kubernetes contexts
         run: kubectl config get-contexts
@@ -42,7 +41,8 @@ jobs:
           --context=kind-staging \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --ignore-paths="./clusters/**/flux-system/"
+          --ignore-paths="./clusters/**/flux-system/" \
+          --verbose
           flux create kustomization flux-system \
           --source=flux-system \
           --path=./clusters/staging \
