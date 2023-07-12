@@ -31,13 +31,10 @@ jobs:
         if: github.action == 'debug'
         run: kubectl get all --all-namespaces
       - name: Debug kubernetes contexts
-        if: github.action == 'debug'
         run: kubectl config get-contexts
       - name: Output helm releases
-        if: github.action == 'debug'
         run: flux get helmreleases  --context kind-staging --all-namespaces
       - name: Output kustomizations
-        if: github.action == 'debug'
         run: flux get kustomizations --context kind-staging --all-namespaces
       - name: Setup cluster reconciliation
         run: |
