@@ -3,7 +3,7 @@ SHELL := /usr/bin/env bash
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --no-builtin-variables
 
-.PHONY: flux-ui help init
+.PHONY: format flux-ui help init validate
 
 cluster-staging-create: init # create a local staging cluster with kind and sync with flux
 	kind create cluster --name staging --config kind/staging.yaml
@@ -20,6 +20,9 @@ cluster-staging-create: init # create a local staging cluster with kind and sync
 
 cluster-staging-delete: init # deletes the local staging cluster
 	kind delete cluster --name staging
+
+format: init ## format yaml and json files
+	prettier --write "**/*.{json,yaml,yml}"
 
 flux-ui: init ## port-forward to the current kubernetes cluster so flux UI can be accessed in http://localhost:9001
 	kubectl -n flux-system port-forward svc/weave-gitops 9001:9001

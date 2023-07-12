@@ -1,7 +1,9 @@
 # gitops
 
 [![e2e staging cluster](https://github.com/darioblanco/gitops/actions/workflows/e2e-staging.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/e2e-staging.yaml)
+[![json](https://github.com/darioblanco/fastapi-example/actions/workflows/json.yaml/badge.svg)](https://github.com/darioblanco/fastapi-example/actions/workflows/json.yaml)
 [![test](https://github.com/darioblanco/gitops/actions/workflows/test.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/test.yaml)
+[![yaml](https://github.com/darioblanco/fastapi-example/actions/workflows/yaml.yaml/badge.svg)](https://github.com/darioblanco/fastapi-example/actions/workflows/yaml.yaml)
 
 Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](https://www.crossplane.io/).
 

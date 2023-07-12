@@ -1,0 +1,14 @@
+name: json
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.json"
+  pull_request:
+    paths:
+      - "**.json"
+  workflow_dispatch:
+jobs:
+  lint:
+    uses: darioblanco/.github/.github/workflows/json.yaml@v1

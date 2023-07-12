@@ -1,0 +1,14 @@
+name: pr
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - ready_for_review
+      - reopened
+      - synchronize
+jobs:
+  pr:
+    uses: darioblanco/.github/.github/workflows/pr.yaml@v1
+    secrets:
+      repoAccessToken: ${{ secrets.GITHUB_TOKEN }}
