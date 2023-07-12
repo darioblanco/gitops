@@ -41,7 +41,15 @@ kubectl cluster-info --context kind-production
 kubectl cluster-info --context kind-staging
 ```
 
-Alternatively, you can use a tool like `kubectx` (`brew install kubectx`):
+To view the available contexts:
+
+```sh
+$ kubectl config get-contexts
+CURRENT   NAME           CLUSTER        AUTHINFO       NAMESPACE
+*         kind-staging   kind-staging   kind-staging   flux-system
+```
+
+Alternatively, you can use a tool like `kubectx` to manage contexts (`brew install kubectx`):
 
 ```sh
 $ kubectx

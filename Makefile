@@ -3,15 +3,45 @@ SHELL := /usr/bin/env bash
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --no-builtin-variables
 
-.PHONY: format flux-ui help init validate
+.PHONY: cluster-crossplane-create cluster-crossplane-delete \
+		cluster-production-create cluster-production-delete \
+		cluster-staging-create cluster-staging-delete \
+		format flux-ui help init validate
 
-cluster-staging-create: init # create a local staging cluster with kind and sync with flux
+cluster-crossplane-create: init ## create a local crossplane cluster with kind and sync with flux
+	kind create cluster --name crossplane --config kind/crossplane.yaml
+	kubectl cluster-info --context kind-crossplane
+	source .envrc
+	flux bootstrap github \
+		--context=kind-crossplane \
+		--owner=${GITHUB_USER} \
+		--repository=${GITHUB_REPO} \
+		--branch=main \
+		--personal \
+		--path=clusters/crossplane
+	watch flux get helmreleases --all-namespaces
+
+cluster-crossplane-delete: init ## deletes the local crossplane cluster
+	kind delete cluster --name crossplane
+
+cluster-production-create: init ## create a local production cluster with kind and sync with flux
+	kind create cluster --name production --config kind/production.yaml
+	kubectl cluster-info --context kind-production
+	source .envrc
+	flux bootstrap github \
+		--context=kind-production \
+		--owner=${GITHUB_USER} \
+		--repository=${GITHUB_REPO} \
+		--branch=main \
+		--personal \
+		--path=clusters/production
+	watch flux get helmreleases --all-namespaces
+
+cluster-production-delete: init ## deletes the local production cluster
+	kind delete cluster --name production
+
+cluster-staging-create: init ## create a local staging cluster with kind and sync with flux
 	kind create cluster --name staging --config kind/staging.yaml
-
-cluster-staging-delete: init # deletes the local staging cluster
-	kind delete cluster --name staging
-
-cluster-staging-provision: init # provisions an already created staging cluster
 	kubectl cluster-info --context kind-staging
 	source .envrc
 	flux bootstrap github \
@@ -22,6 +52,9 @@ cluster-staging-provision: init # provisions an already created staging cluster
 		--personal \
 		--path=clusters/staging
 	watch flux get helmreleases --all-namespaces
+
+cluster-staging-delete: init ## deletes the local staging cluster
+	kind delete cluster --name staging
 
 format: init ## format yaml and json files
 	prettier --write "**/*.{json,yaml,yml}"
