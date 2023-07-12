@@ -25,36 +25,27 @@ jobs:
           cluster_name: staging
       - name: Install Flux in Kubernetes Kind
         run: flux install
-      - name: Verify Flux Installation
-        run: flux check --pre
-      - name: Debug kubernetes resources
-        run: kubectl get all --all-namespaces
-      - name: Debug kubernetes contexts
-        run: kubectl config get-contexts
-      - name: Output helm releases
-        run: flux get helmreleases  --context kind-staging --all-namespaces
-      - name: Output kustomizations
-        run: flux get kustomizations --context kind-staging --all-namespaces
       - name: Setup cluster reconciliation
         run: |
           flux create source git flux-system \
-          --context=kind-staging \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --ignore-paths="./clusters/**/flux-system/" \
-          --verbose
+          --username=${GITHUB_USER} \
+          --password=${GITHUB_TOKEN} \
+          --ignore-paths="./clusters/**/flux-system/"
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/staging \
-          --timeout=3m \
-          --verbose
-      - name: Verify cluster reconciliation
+          --path=./clusters/staging
+        env:
+          GITHUB_USER: darioblanco
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify infrastructure reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
           kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-      - name: Verify helm reconciliation
+      - name: Verify app reconciliation
         run: |
-          kubectl -n podinfo wait helmrelease/fastapi-example --for=condition=ready --timeout=5m
+          kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
           kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
       - name: Debug failure
         if: failure()
