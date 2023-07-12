@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo "Running pre-commit hook: make format"
+
+make format
+
+# Check the exit status of the make format command
+if [ $? -ne 0 ]; then
+ echo "Unable to automatically format repo files."
+ exit 1
+fi
+
+echo "Files automatically formatted."
+exit 0

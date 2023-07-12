@@ -1,0 +1,36 @@
+#!/bin/bash
+
+message=$(cat "$1")
+
+# Regex to validate commit for the pattern type(scope): subject
+# e.g. feat(user-login): add login functionality
+pattern="^([a-z]+)(\([[a-z_-]*\))?: .+"
+
+if [[ ! $message =~ $pattern ]]; then
+  echo "Your commit message does not match the conventional commit format."
+  echo "Commit message: $message"
+  echo "Please ensure your commit message matches one of the following patterns:"
+  echo "	type(scope): subject"
+  echo "	e.g. feat(user-login): add login functionality"
+  echo "	type: subject"
+  echo "	e.g. fix: change logout functionality"
+  exit 1
+fi
+
+commit_type="${BASH_REMATCH[1]}"
+valid_types=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "revert" "style" "test")
+valid=false
+
+for type in "${valid_types[@]}"; do
+  if [[ $commit_type == "$type" ]]; then
+    valid=true
+    break
+  fi
+done
+
+if [ "$valid" = true ]; then
+  exit 0
+else
+  echo "Invalid commit type. Allowed types are: ${valid_types[*]}"
+  exit 1
+fi
