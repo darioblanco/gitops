@@ -33,6 +33,9 @@ jobs:
           --username=${GITHUB_USER} \
           --password=${GITHUB_TOKEN} \
           --ignore-paths="./clusters/**/flux-system/"
+
+          kubectl describe -n flux-system gitrepository flux-system
+
           flux create kustomization flux-system \
           --source=flux-system \
           --path=./clusters/staging
