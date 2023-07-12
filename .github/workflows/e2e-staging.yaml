@@ -38,7 +38,7 @@ jobs:
           --path=./clusters/staging
         env:
           GITHUB_USER: darioblanco
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
       - name: Verify infrastructure reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
