@@ -1,5 +1,8 @@
 # gitops
 
+[![e2e staging cluster](https://github.com/darioblanco/gitops/actions/workflows/e2e-staging.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/e2e-staging.yaml)
+[![test](https://github.com/darioblanco/gitops/actions/workflows/test.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/test.yaml)
+
 Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](https://www.crossplane.io/).
 
 ## Repository structure
