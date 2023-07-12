@@ -493,5 +493,5 @@ This repository contains the following GitHub CI workflows:
 
 ## References
 
-[Flux2 Example](https://github.com/fluxcd/flux2-kustomize-helm-example)
-[How to apply GitOps to everything with Crossplane and Flux](https://www.cncf.io/blog/2022/07/26/how-to-apply-gitops-to-everything-with-crossplane-and-flux/)
+- [Flux2 Example](https://github.com/fluxcd/flux2-kustomize-helm-example)
+- [How to apply GitOps to everything with Crossplane and Flux](https://www.cncf.io/blog/2022/07/26/how-to-apply-gitops-to-everything-with-crossplane-and-flux/)

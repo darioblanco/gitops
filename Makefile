@@ -7,6 +7,11 @@ MAKEFLAGS += --no-builtin-variables
 
 cluster-staging-create: init # create a local staging cluster with kind and sync with flux
 	kind create cluster --name staging --config kind/staging.yaml
+
+cluster-staging-delete: init # deletes the local staging cluster
+	kind delete cluster --name staging
+
+cluster-staging-provision: init # provisions an already created staging cluster
 	kubectl cluster-info --context kind-staging
 	source .envrc
 	flux bootstrap github \
@@ -17,9 +22,6 @@ cluster-staging-create: init # create a local staging cluster with kind and sync
 		--personal \
 		--path=clusters/staging
 	watch flux get helmreleases --all-namespaces
-
-cluster-staging-delete: init # deletes the local staging cluster
-	kind delete cluster --name staging
 
 format: init ## format yaml and json files
 	prettier --write "**/*.{json,yaml,yml}"

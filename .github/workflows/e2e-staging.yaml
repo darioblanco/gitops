@@ -1,4 +1,4 @@
-name: e2e staging cluster
+name: e2e staging
 
 on:
   push:
@@ -25,8 +25,12 @@ jobs:
           cluster_name: staging
           config: kind/staging.yaml
       - name: Install Flux in Kubernetes Kind
-        run: flux install
-      - name: Setup cluster reconciliation based on the staging manifests
+        run: flux install --verbose
+      - name: Output helm releases
+        run: flux get helmreleases --all-namespaces
+      - name: Output kustomizations
+        run: flux get kustomizations --all-namespaces
+      - name: Setup cluster reconciliation
         run: |
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
@@ -34,7 +38,9 @@ jobs:
           --ignore-paths="./clusters/**/flux-system/"
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/staging
+          --path=./clusters/staging \
+          --timeout=10m \
+          --verbose
       - name: Verify cluster reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
