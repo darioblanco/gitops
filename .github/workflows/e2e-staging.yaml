@@ -30,18 +30,11 @@ jobs:
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --username=${GITHUB_USER} \
-          --password=${GITHUB_TOKEN} \
           --ignore-paths="./clusters/**/flux-system/"
-
-          kubectl describe -n flux-system gitrepository flux-system
 
           flux create kustomization flux-system \
           --source=flux-system \
           --path=./clusters/staging
-        env:
-          GITHUB_USER: darioblanco
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
       - name: Verify infrastructure reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
@@ -58,3 +51,4 @@ jobs:
           kubectl -n flux-system logs deploy/kustomize-controller
           kubectl -n flux-system logs deploy/helm-controller
           flux get all --all-namespaces
+          kubectl describe -n flux-system gitrepository flux-system
