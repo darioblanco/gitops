@@ -24,6 +24,7 @@ jobs:
         uses: helm/kind-action@v1.8.0
         with:
           cluster_name: staging
+          config: kind/staging.yaml
       - name: Install Flux in Kubernetes Kind
         run: flux install
       - name: Setup cluster reconciliation
@@ -40,7 +41,7 @@ jobs:
       - name: Verify infrastructure reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-          kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=10m
+          kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
       - name: Verify app reconciliation
         run: |
           kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
@@ -48,9 +49,24 @@ jobs:
       - name: Debug failure
         if: failure()
         run: |
+          kubectl get namespaces
+
+          echo ""
+          echo "***** flux-system namespace *****"
           kubectl -n flux-system get all
           kubectl -n flux-system logs deploy/source-controller
           kubectl -n flux-system logs deploy/kustomize-controller
           kubectl -n flux-system logs deploy/helm-controller
+
+          echo ""
+          echo "***** fastapi-example namespace *****"
+          kubectl -n fastapi-example get all
+
+          echo ""
+          echo "***** podinfo namespace *****"
+          kubectl -n podinfo get all
+
+          echo ""
+          echo "***** flux custom resources *****"
           flux get all --all-namespaces
           kubectl describe -n flux-system gitrepository flux-system
