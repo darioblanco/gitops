@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Exit if one of the scripts fail
+set -e
+
 if [ -z "$1" ]
 then
   echo "Error: No kind cluster name provided."
