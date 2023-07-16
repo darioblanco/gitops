@@ -52,6 +52,3 @@ kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=re
 echo ""
 echo "🍿 Waiting for the podinfo app..."
 kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
-
-echo ""
-echo " ✅ The ${CLUSTER_NAME} cluster has been successfully provisioned and reconciled!"
