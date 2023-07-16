@@ -1,4 +1,4 @@
-name: e2e staging
+name: e2e
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - "apps/staging/**"
       - "clusters/staging/**"
       - "infrastructure/**"
+      - ".github/workflows/e2e.yaml"
     branches: ["*"]
     tags-ignore: ["*"]
   workflow_dispatch:

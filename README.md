@@ -1,6 +1,6 @@
 # gitops
 
-[![e2e staging cluster](https://github.com/darioblanco/gitops/actions/workflows/e2e-staging.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/e2e-staging.yaml)
+[![e2e](https://github.com/darioblanco/gitops/actions/workflows/e2e.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/e2e.yaml)
 [![json](https://github.com/darioblanco/gitops/actions/workflows/json.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/json.yaml)
 [![test](https://github.com/darioblanco/gitops/actions/workflows/test.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/test.yaml)
 [![yaml](https://github.com/darioblanco/gitops/actions/workflows/yaml.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/yaml.yaml)
