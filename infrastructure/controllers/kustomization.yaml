@@ -6,6 +6,6 @@ resources:
   # - external-dns
   - ingress-nginx
   # - monitoring
-  - rabbitmq
+  # - rabbitmq
   - sso
   - weave-gitops
