@@ -11,6 +11,7 @@ CLUSTER_NAME="$1"
 CONTEXT_NAME="kind-${CLUSTER_NAME}"
 
 # Source the .envrc file to load the GITHUB_USER and GITHUB_REPO environment variables
+# shellcheck source=/dev/null
 source .envrc
 
 echo ""
