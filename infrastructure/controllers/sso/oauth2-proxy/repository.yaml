@@ -1,7 +1,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: dex
+  name: oauth2-proxy
 spec:
   interval: 120m
   type: default
