@@ -5,4 +5,4 @@ metadata:
 spec:
   interval: 120m
   type: default
-  url: https://charts.dexidp.io
+  url: https://oauth2-proxy.github.io/manifests

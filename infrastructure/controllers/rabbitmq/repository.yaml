@@ -5,4 +5,4 @@ metadata:
 spec:
   type: oci
   interval: 60m0s
-  url: oci://registry-1.docker.io/bitnamicharts/rabbitmq
+  url: oci://registry-1.docker.io/bitnamicharts

@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   # Here you can toggle the resources you want to provision in your clusters
   - cert-manager
-  - external-dns
+  # - external-dns
   - ingress-nginx
   # - monitoring
   - rabbitmq
