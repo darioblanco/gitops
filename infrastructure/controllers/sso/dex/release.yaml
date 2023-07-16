@@ -26,10 +26,10 @@ spec:
       # Enable at least one connector
       # See https://dexidp.io/docs/connectors/ for more options
       enablePasswordDB: true
-  ingress:
-    enabled: true
+    ingress:
+      enabled: true
 
-    hosts:
-      - host: my-issuer-url.com
-        paths:
-          - path: /
+      hosts:
+        - host: my-issuer-url.com
+          paths:
+            - path: /
