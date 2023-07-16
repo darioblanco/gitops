@@ -1,0 +1,17 @@
+# See https://artifacthub.io/packages/helm/bitnami/rabbitmq
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rabbitmq
+spec:
+  interval: 60m
+  chart:
+    spec:
+      chart: rabbitmq
+      version: "12.x"
+      sourceRef:
+        kind: HelmRepository
+        name: rabbitmq
+      interval: 12h
+  # https://github.com/bitnami/charts/blob/main/bitnami/rabbitmq/values.yaml
+  # values:

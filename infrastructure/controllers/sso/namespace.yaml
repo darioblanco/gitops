@@ -3,4 +3,4 @@ kind: Namespace
 metadata:
   name: sso
   labels:
-    app.kubernetes.io/component: monitoring
+    toolkit.fluxcd.io/tenant: sre-team
