@@ -1,0 +1,14 @@
+name: Shell
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "**.sh"
+  pull_request:
+    paths:
+      - "**.sh"
+  workflow_dispatch:
+jobs:
+  lint:
+    uses: darioblanco/.github/.github/workflows/shell.yaml@v1
