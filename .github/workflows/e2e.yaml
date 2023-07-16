@@ -29,11 +29,10 @@ jobs:
         run: flux install
       - name: Setup cluster reconciliation
         run: |
-          pwd
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --ignore-paths="./clusters/staging/flux-system/"
+          --ignore-paths=clusters/staging/flux-system/
 
           flux create kustomization flux-system \
           --source=flux-system \
