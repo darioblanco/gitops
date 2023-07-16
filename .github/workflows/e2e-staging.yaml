@@ -27,6 +27,11 @@ jobs:
         run: flux install
       - name: Setup cluster reconciliation
         run: |
+          flux create secret git flux-system \
+            --url=ssh://git@github.com/darioblanco/gitops \
+            --ssh-key-algorithm=ecdsa \
+            --ssh-ecdsa-curve=p521
+
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
