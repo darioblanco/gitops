@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 5m
   dependsOn:
-    - name: kube-prometheus-stack
+    - name: prometheus
   chart:
     spec:
       version: "2.x"
