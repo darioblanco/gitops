@@ -1,0 +1,35 @@
+# See https://artifacthub.io/packages/helm/dex/dex
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dex
+spec:
+  interval: 5m
+  chart:
+    spec:
+      version: "0.15.x"
+      chart: dex
+      sourceRef:
+        kind: HelmRepository
+        name: dex
+      interval: 60m
+  # https://github.com/dexidp/helm-charts/blob/master/charts/dex/values.yaml
+  values:
+    config:
+      # Set it to a valid URL
+      issuer: http://my-issuer-url.com
+
+      # See https://dexidp.io/docs/storage/ for more options
+      storage:
+        type: memory
+
+      # Enable at least one connector
+      # See https://dexidp.io/docs/connectors/ for more options
+      enablePasswordDB: true
+  ingress:
+    enabled: true
+
+    hosts:
+      - host: my-issuer-url.com
+        paths:
+          - path: /

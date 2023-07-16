@@ -1,0 +1,17 @@
+# See https://artifacthub.io/packages/helm/oauth2-proxy/oauth2-proxy
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: oauth2-proxy
+spec:
+  interval: 5m
+  chart:
+    spec:
+      version: "6.16.x"
+      chart: oauth2-proxy
+      sourceRef:
+        kind: HelmRepository
+        name: oauth2-proxy
+      interval: 60m
+  # https://github.com/oauth2-proxy/manifests/blob/main/helm/oauth2-proxy/values.yaml
+  # values:
