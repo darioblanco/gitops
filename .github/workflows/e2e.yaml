@@ -28,10 +28,11 @@ jobs:
         run: flux install
       - name: Setup cluster reconciliation
         run: |
+          pwd
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --ignore-paths="./clusters/**/flux-system/"
+          --ignore-paths="./clusters/staging/flux-system/"
 
           flux create kustomization flux-system \
           --source=flux-system \
@@ -39,7 +40,7 @@ jobs:
       - name: Verify infrastructure reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-          kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=10m
       - name: Verify app reconciliation
         run: |
           kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
