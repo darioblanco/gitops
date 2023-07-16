@@ -58,6 +58,7 @@ init: ## verify that all the required commands are already installed
 		cmd kind ;\
 		cmd kubeconform ;\
 		cmd kubectl ;\
+		cmd prettier ;\
 		cp .githooks/* .git/hooks/ ;\
 	fi
 
