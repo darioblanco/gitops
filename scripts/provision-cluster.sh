@@ -107,3 +107,4 @@ kubectl create secret generic sops-age \
 	--from-file=./clusters/"${cluster_name}"/sops.agekey
 	echo "Secret 'sops-age' created."
 fi
+echo ""
