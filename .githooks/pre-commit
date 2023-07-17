@@ -11,4 +11,20 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Files automatically formatted."
-exit 0
+
+echo "Running pre-commit hook: make validate"
+
+# If there is at least one YAML file, run `make validate`
+if [ "$(git diff --cached --name-only --diff-filter=d | grep -c -E '\.yaml$')" -gt 0 ]; then
+  echo "Running make validate due to staged YAML files..."
+
+  make validate
+
+  # Check the exit status of the make validate command
+  if [ $? -ne 0 ]; then
+   echo "Validation failed."
+   exit 1
+  fi
+
+  echo "Validation passed."
+fi
