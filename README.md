@@ -532,8 +532,10 @@ In addition, the `sops` configuration defines an `encrypted_regex` so it will on
 Therefore, to encrypt a secret so it can be pushed to the repo:
 
 ```sh
-sops --in-place secret.yaml
+sops -e --in-place secret.yaml && make format
 ```
+
+(Make format has to be run because SOPS create yaml files that do not follow the .editorconfig standard)
 
 Always make sure that the secrets you push to the repo are encrypted!
 
