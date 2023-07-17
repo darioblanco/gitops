@@ -6,8 +6,8 @@ metadata:
 spec:
   chart:
     spec:
-      version: "*"
+      version: "4.x"
   # https://github.com/weaveworks/weave-gitops/blob/main/charts/gitops-server/values.yaml
   valuesFrom:
     - kind: Secret
-      name: weave-gitops
+      name: weave-gitops-secrets

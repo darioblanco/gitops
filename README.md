@@ -529,15 +529,24 @@ are always divided by cluster, `sops` know which public key to use thanks to tha
 In addition, the `sops` configuration defines an `encrypted_regex` so it will only encrypt the
 `data` and `stringData` attributes, that are only found in Kubernetes secrets.
 
-Therefore, to encrypt a secret so it can be pushed to the repo:
+Therefore, to encrypt a secret resource so it can be pushed to the repo:
 
 ```sh
-sops -e --in-place secret.yaml && make format
+sops -e --in-place secret.yaml
 ```
 
-(Make format has to be run because SOPS create yaml files that do not follow the .editorconfig standard)
-
 Always make sure that the secrets you push to the repo are encrypted!
+
+It is also possible to encrypt `secret-values.yaml` files entirely, but they should never be pushed to the repo:
+
+```sh
+sops -e  secret-values.yaml > secret-values.enc.yaml
+```
+
+It is safe to run this command because `secret-values.yaml` are always git ignored.
+
+NOTE: make format has to be run because SOPS create yaml files that do not follow the .editorconfig standard.
+You can run it manually or the git hook will.
 
 ### Decrypt Kubernetes secrets
 

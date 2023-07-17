@@ -3,8 +3,11 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ../../base/weave-gitops
-  - secret.yaml
 patches:
   - path: release.yaml
     target:
       kind: HelmRelease
+secretGenerator:
+  - name: weave-gitops-secrets
+    files:
+      - values.yaml=secret-values.enc.yaml

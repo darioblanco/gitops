@@ -9,3 +9,4 @@ output.yaml
 
 # Private keys
 *.agekey
+secret-values.yaml
