@@ -8,25 +8,6 @@ spec:
     spec:
       version: "*"
   # https://github.com/weaveworks/weave-gitops/blob/main/charts/gitops-server/values.yaml
-  values:
-    passwordHash: ENC[AES256_GCM,data:zbA1q/J4B/h1wpdFTsAqREVBFeOH6poJNcPLUyXnx+McmTqmuN9NfAMAiWMe2joMblCeI7Fc8ytQnUwy,iv:NCUioOlmEl7YaChv+Kccz4B1j51lL2r9RF5AjkeFT+8=,tag:JW+yk+KbtGk+UPFIvF2FeA==,type:str]
-sops:
-  kms: []
-  gcp_kms: []
-  azure_kv: []
-  hc_vault: []
-  age:
-    - recipient: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBKbGFYQ0NEa3ZURCtqRWl4
-        N0ExVEhVdGk3ZTVIT0VRblRJb2syK1ZmZFVjCjVwclhVRGVzZkJUK1BTeU90VXg2
-        RWhOU1NoQmtReGhRemFzcHhoYXRQSTQKLS0tIGxlb3gwTDQwaDF1QXpBQ1l3MEJ1
-        WktTSVZBQXhnTFRBNW0rT3BZdVJuUFkKZIMJ9ZRqFLTUvP/7qdBfAwFWk3Fa/R8k
-        EDitFB+gFqKqoUpGRHrBYcCNjyiCUpsxuSpgO2Oj+1TasZxn40RMtA==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2023-07-17T20:38:34Z"
-  mac: ENC[AES256_GCM,data:P2/8fl4nf+kz9azz49lkapxtGKIalzZhUEM/MOmfFnFcmjpIpPP9d+l9lA0C0fz6/8HUJWSLY9OVGQO0DWQ/p+E0e3jgp7aPrIKSDhQfI1GzWVkCAFw96td35vDqmTxB7qqcvakpsFiuOZz7L8eesftIlFaycSJUe7kGW8KwLRY=,iv:iEPUsaypOc+zMIe4U886EuxsssIp4BrjQcZEmyoJz8o=,tag:EXvGHictI5sQxOAwYiteyQ==,type:str]
-  pgp: []
-  encrypted_regex: ^(data|stringData|passwordHash|password)$
-  version: 3.7.3
+  valuesFrom:
+    - kind: Secret
+      name: weave-gitops

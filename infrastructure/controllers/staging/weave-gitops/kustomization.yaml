@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ../../base/weave-gitops
+  - secret.yaml
 patches:
   - path: release.yaml
     target:
