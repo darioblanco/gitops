@@ -10,4 +10,4 @@ spec:
   # https://github.com/weaveworks/weave-gitops/blob/main/charts/gitops-server/values.yaml
   valuesFrom:
     - kind: Secret
-      name: weave-gitops-secrets
+      name: weave-gitops

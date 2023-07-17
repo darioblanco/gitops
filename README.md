@@ -532,16 +532,10 @@ In addition, the `sops` configuration defines an `encrypted_regex` so it will on
 Therefore, to encrypt a secret resource so it can be pushed to the repo:
 
 ```sh
-sops -e --in-place secret.yaml
+sops -e secret.yaml > secret.enc.yaml
 ```
 
 Always make sure that the secrets you push to the repo are encrypted!
-
-It is also possible to encrypt `secret-values.yaml` files entirely, but they should never be pushed to the repo:
-
-```sh
-sops -e  secret-values.yaml > secret-values.enc.yaml
-```
 
 It is safe to run this command because `secret-values.yaml` are always git ignored.
 
