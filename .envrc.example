@@ -9,3 +9,7 @@ export GITHUB_OWNER=myorg
 
 # The GitOps repo
 export GITHUB_REPO=myrepo
+
+# The list of age secret keys that allow to decrypt sops secrets locally
+SOPS_AGE_KEY_FILE=$(cat ./clusters/crossplane/sops.agekey; echo; cat ./clusters/staging/sops.agekey; echo; cat ./clusters/production/sops.agekey)
+export SOPS_AGE_KEY_FILE

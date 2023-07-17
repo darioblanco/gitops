@@ -6,3 +6,6 @@ bin/
 
 # Other
 output.yaml
+
+# Private keys
+*.agekey

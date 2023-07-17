@@ -493,6 +493,59 @@ This repository contains the following GitHub CI workflows:
 - the [test](./.github/workflows/test.yaml) workflow validates the Kubernetes manifests and Kustomize overlays with [kubeconform](https://github.com/yannh/kubeconform)
 - the [e2e](./.github/workflows/e2e.yaml) workflow starts a Kubernetes cluster in CI and tests the staging setup by running Flux in Kubernetes Kind.
 
+## Secrets
+
+Secrets encryption is done with `Mozilla SOPS` and `age` as its backend, at client level:
+
+- [Using SOPS with age and git like a pro](https://devops.datenkollektiv.de/using-sops-with-age-and-git-like-a-pro.html)
+- [Encrypted GitOps secrets with flux and age](https://major.io/p/encrypted-gitops-secrets-with-flux-and-age/)
+
+To be able to decrypt secrets, you need to have a private file per cluster. The private file
+has to be stored in `./cluster/{clusterName}/sops.agekey`.
+
+### Generate a private key per cluster
+
+Each cluster folder in `./clusters/` should have a git ignored `sops.agekey` file, whose public key
+is listed in `./.sops.yaml` with a path_regex that involves files that only belong to that cluster.
+
+You should have a file there with a format like this:
+
+```sh
+$ cat sops.agekey
+# created: 2023-07-17T14:07:50+02:00
+# public key: age1v6q8sylunaq9m08rwxq702enmmh9lama7sp47vkcw3z8wm74z39q846s3y
+AGE-SECRET-KEY-THIS_IS_A_SECRET_THAT_SHOULD_NEVER_BE_PUSHED
+```
+
+Normally, you would need to put an `AGE-SECRET-*` value that is shared within your team. The
+`sops.agekey` file will never be pushed to the repo as it is git ignored.
+
+### Encrypt Kubernetes secrets
+
+The encrypt command with `sops` is easy because the `.sops.yaml` configuration file already
+points to the age public key based on the path of the target file. As the files to be encrypted
+are always divided by cluster, `sops` know which public key to use thanks to that config.
+
+In addition, the `sops` configuration defines an `encrypted_regex` so it will only encrypt the
+`data` and `stringData` attributes, that are only found in Kubernetes secrets.
+
+Therefore, to encrypt a secret so it can be pushed to the repo:
+
+```sh
+sops --in-place secret.yaml
+```
+
+Always make sure that the secrets you push to the repo are encrypted!
+
+### Decrypt Kubernetes secrets
+
+With the environment variables loaded (`source .envrc`), you can decrypt specific attributes from the YAML:
+
+```sh
+$ sops -d --extract '["data"]' secret.yaml
+foo: ValueThatWasEncrypted
+```
+
 ## References
 
 - [Flux2 Example](https://github.com/fluxcd/flux2-kustomize-helm-example)
