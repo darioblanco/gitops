@@ -2,7 +2,7 @@
 
 [![e2e](https://github.com/darioblanco/gitops/actions/workflows/e2e.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/e2e.yaml)
 [![json](https://github.com/darioblanco/gitops/actions/workflows/json.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/json.yaml)
-[![test](https://github.com/darioblanco/gitops/actions/workflows/test.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/test.yaml)
+[![validate](https://github.com/darioblanco/gitops/actions/workflows/validate.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/validate.yaml)
 [![yaml](https://github.com/darioblanco/gitops/actions/workflows/yaml.yaml/badge.svg)](https://github.com/darioblanco/gitops/actions/workflows/yaml.yaml)
 
 Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](https://www.crossplane.io/).

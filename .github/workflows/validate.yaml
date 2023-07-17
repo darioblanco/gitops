@@ -1,16 +1,14 @@
-name: test
+name: validate
 
 on:
   pull_request:
     paths:
-      - "*.yaml"
-      - "*.yml"
+      - "**.yaml"
+      - "**.yml"
   push:
     paths:
-      - "*.yaml"
-      - "*.yml"
-    branches: ["*"]
-    tags-ignore: ["*"]
+      - "**.yaml"
+      - "**.yml"
   workflow_dispatch:
 
 jobs:
