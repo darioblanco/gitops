@@ -58,7 +58,7 @@ gitops-staging: init ## create a local staging cluster with kind and sync with f
 	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
 
 format: init ## format yaml and json files
-	prettier --write "**/*.{json,yaml,yml}"
+	prettier --write "**/*.{json,yaml,yml}" --log-level error
 
 flux-ui: init ## port-forward to the current kubernetes cluster so flux UI can be accessed in http://localhost:9001
 	kubectl -n flux-system port-forward svc/weave-gitops 9001:9001
