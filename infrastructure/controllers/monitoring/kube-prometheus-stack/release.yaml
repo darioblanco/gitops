@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prometheus
+  name: kube-prometheus-stack
 spec:
   interval: 5m
   chart:
@@ -21,7 +21,16 @@ spec:
   values:
     alertmanager:
       enabled: false
+    grafana:
+      ingress:
+        enabled: true
+        hosts:
+          - grafana.local
     prometheus:
+      ingress:
+        enabled: true
+        hosts:
+          - prometheus.local
       prometheusSpec:
         retention: 24h
         resources:

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# The token with admin permissions in the ${GITHUB_REPO} repository (so it can create deploy keys)
+# as defined in https://fluxcd.io/flux/installation/#github-and-github-enterprise
 export GITHUB_TOKEN=secret
-export GITHUB_USER=myuser
+
+# The github organization of the GitOps repo
+export GITHUB_OWNER=myorg
+
+# The GitOps repo
 export GITHUB_REPO=myrepo

@@ -7,6 +7,8 @@
 
 Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](https://www.crossplane.io/).
 
+Run `make help` for a list of commands.
+
 ## Repository structure
 
 The Git repository contains the following top directories:
