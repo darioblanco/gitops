@@ -27,11 +27,3 @@ patches:
     target:
       kind: Kustomization
       name: "flux-system"
-generatorOptions:
-  disableNameSuffixHash: true
-secretGenerator:
-  - name: sops-age
-    namespace: flux-system
-    type: Opaque
-    literals:
-      - sops.agekey="AGE-SECRET-KEY-EMPTY"
