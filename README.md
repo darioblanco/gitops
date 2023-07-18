@@ -542,6 +542,14 @@ It is safe to run this command because `secret-values.yaml` are always git ignor
 NOTE: make format has to be run because SOPS create yaml files that do not follow the .editorconfig standard.
 You can run it manually or the git hook will.
 
+Alternatively, you can achieve the same (encryption + formatting) through the `encrypt.sh` script:
+
+```sh
+$ ./scripts/encrypt.sh secret.yaml
+secret.enc.yaml 20ms
+✅ Encrypted file saved to secret.enc.yaml
+```
+
 ### Decrypt Kubernetes secrets
 
 With the environment variables loaded (`source .envrc`), you can decrypt specific attributes from the YAML:
@@ -549,6 +557,13 @@ With the environment variables loaded (`source .envrc`), you can decrypt specifi
 ```sh
 $ sops -d --extract '["data"]' secret.yaml
 foo: ValueThatWasEncrypted
+```
+
+Alternatively, you can decrypt and store the decrypted files with this script:
+
+```sh
+$ ./scripts/decrypt.sh secret.enc.yaml
+✅ Decrypted file saved to secret.yaml
 ```
 
 ## References
