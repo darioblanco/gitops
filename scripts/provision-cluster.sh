@@ -53,20 +53,6 @@ private_key_path="./clusters/${cluster_name}/sops.agekey"
 # shellcheck source=/dev/null
 source .envrc
 
-if kubectl get secret sops-age --context="${context_name}" --namespace=flux-system > /dev/null 2>&1; then
-	print_yellow "Secret 'sops-age' already exists. Skipping creation."
-else
-	# Create the namespace and secret before bootstraping, because bootstraping needs to have
-	# sops-age for the flux-system Kustomization
-	print_blue "🔑 Create private sops-age key for global secret management..."
-	kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
-	kubectl create secret generic sops-age \
-		--context="${context_name}" \
-		--namespace=flux-system \
-		--from-file=./clusters/"${cluster_name}"/sops.agekey
-		print_green "Secret 'sops-age' created."
-fi
-
 if [ "$gitops_flag" = true ] ; then
 	# Provision flux the "gitops" way (https://fluxcd.io/flux/cmd/flux_bootstrap/)
 	echo ""
@@ -108,3 +94,18 @@ if [ ! -f "$private_key_path" ]; then
 		exit_gracefully
 	fi
 fi
+
+# Provision the key that will be used to decrypt sops secrets
+echo ""
+print_blue "🔑 Creating private sops-age key for global secret management..."
+
+if kubectl get secret sops-age --context="${context_name}" --namespace=flux-system > /dev/null 2>&1; then
+	print_yellow "Secret 'sops-age' already exists. Skipping creation."
+else
+kubectl create secret generic sops-age \
+	--context="${context_name}" \
+	--namespace=flux-system \
+	--from-file=./clusters/"${cluster_name}"/sops.agekey
+	print_green "Secret 'sops-age' created."
+fi
+echo ""

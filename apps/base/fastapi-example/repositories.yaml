@@ -3,7 +3,7 @@
 # kind: ImageRepository
 # metadata:
 #   name: fastapi-example
-#   namespace: fastapi-example
+#   namespace: flux-system
 # spec:
 #   image: darioblanco/fastapi-example
 #   interval: 1h
@@ -14,7 +14,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: fastapi-example
-  namespace: fastapi-example
+  namespace: flux-system
 spec:
   interval: 5m
   url: https://github.com/darioblanco/fastapi-example
