@@ -33,5 +33,5 @@ secretGenerator:
   - name: sops-age
     namespace: flux-system
     type: Opaque
-    files:
-      - sops.agekey
+    literals:
+      - sops.agekey="AGE-SECRET-KEY-EMPTY"
