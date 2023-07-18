@@ -17,3 +17,10 @@ patches:
     target:
       kind: Deployment
       name: "(kustomize-controller|helm-controller|source-controller)"
+  - patch: |
+      - op: add
+        path: /metadata/labels/toolkit.fluxcd.io~1tenant
+        value: sre-team
+    target:
+      kind: Namespace
+      name: flux-system

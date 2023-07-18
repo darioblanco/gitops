@@ -27,3 +27,10 @@ patches:
     target:
       kind: Kustomization
       name: "flux-system"
+  - patch: |
+      - op: add
+        path: /metadata/labels/toolkit.fluxcd.io~1tenant
+        value: sre-team
+    target:
+      kind: Namespace
+      name: flux-system
