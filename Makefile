@@ -84,6 +84,7 @@ init: ## verify that all the required commands are already installed
 		cmd kubectl ;\
 		cmd prettier ;\
 		cmd sops ;\
+		cmd yq ;\
 		cp .githooks/* .git/hooks/ ;\
 		git config diff.sopsdiffer.textconv "sops -d" ;\
 	fi
