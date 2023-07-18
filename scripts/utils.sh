@@ -3,27 +3,27 @@
 reset_color='\033[0m'
 
 function print_blue() {
-  printf "⌛️ \033[34m%s%s\n" "$1" "$reset_color"
+  echo -e "⌛️ \033[34m${1}${reset_color}\n"
 }
 
 function print_cyan() {
-  printf "🎉 \033[36m%s%s\n" "$1" "$reset_color"
+  echo -e "🎉 \033[36m${1}${reset_color}\n"
 }
 
 function print_green() {
-  printf "✅ \033[32m%s%s\n" "$1" "$reset_color"
+  echo -e "✅ \033[32m${1}${reset_color}\n"
 }
 
 function print_magenta() {
-  printf "🤨 \033[35m%s%s\n" "$1" "$reset_color"
+  echo -e "🤨 \033[35m${1}${reset_color}\n"
 }
 
 function print_red() {
-  printf "🚨 \033[31m%s%s\n" "$1" "$reset_color"
+  echo -e "🚨 \033[31m${1}${reset_color}\n"
 }
 
 function print_yellow() {
-  printf "📣 \033[33m%s%s\n" "$1" "$reset_color"
+  echo -e "📣 \033[33m${1}${reset_color}\n"
 }
 
 function exit_gracefully() {

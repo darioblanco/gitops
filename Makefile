@@ -24,7 +24,7 @@ e2e-production: init ## create a local production cluster with kind and sync wit
 	./scripts/provision-cluster.sh production kind-production
 	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
 	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
 	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
 
 e2e-staging: init ## create a local staging cluster with kind and sync with flux without gitops
@@ -32,7 +32,7 @@ e2e-staging: init ## create a local staging cluster with kind and sync with flux
 	./scripts/provision-cluster.sh staging kind-staging
 	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
 	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
 	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
 
 gitops-crossplane: init ## create a local crossplane cluster with kind and sync with flux via gitops
@@ -46,7 +46,7 @@ gitops-production: init ## create a local production cluster with kind and sync 
 	./scripts/provision-cluster.sh production kind-production --gitops
 	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
 	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
 	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
 
 gitops-staging: init ## create a local staging cluster with kind and sync with flux via gitops
@@ -54,7 +54,7 @@ gitops-staging: init ## create a local staging cluster with kind and sync with f
 	./scripts/provision-cluster.sh staging kind-staging --gitops
 	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
 	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
 	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
 
 format: init ## format yaml and json files
