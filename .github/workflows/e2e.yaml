@@ -40,7 +40,7 @@ jobs:
 
           kubectl create secret generic sops-age \
             --namespace=flux-system \
-            --from-literal=sops.agekey=${secrets.E2E_AGEKEY}
+            --from-literal=sops.agekey=${{ secrets.E2E_AGEKEY }}
       - name: Verify infrastructure reconciliation
         run: |
           kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=10m
