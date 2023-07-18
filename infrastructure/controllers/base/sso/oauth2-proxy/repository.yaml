@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: oauth2-proxy
-  namespace: flux-system
+  namespace: sso
 spec:
   interval: 120m
   type: default
