@@ -1,0 +1,9 @@
+# See https://artifacthub.io/packages/helm/cert-manager/cert-manager
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cert-manager
+spec:
+  chart:
+    spec:
+      version: "1.x"
