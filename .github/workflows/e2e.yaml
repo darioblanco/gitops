@@ -45,11 +45,12 @@ jobs:
           E2E_AGEKEY: ${{ secrets.E2E_AGEKEY }}
       - name: Verify infrastructure reconciliation
         run: |
-          kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=10m
+          kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
           kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
       - name: Verify app reconciliation
         run: |
-          kubectl -n fastapi-example wait kustomization/fastapi-example --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
           kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
       - name: Debug failure
         if: failure()
