@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./addons/staging
+  path: ./addons/dev
   prune: true
   wait: true
   decryption:
