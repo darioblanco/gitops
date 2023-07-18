@@ -8,3 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: fastapi-example
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
