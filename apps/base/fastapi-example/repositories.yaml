@@ -1,20 +1,20 @@
----
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageRepository
-metadata:
-  name: fastapi-example
-  namespace: flux-system
-spec:
-  image: darioblanco/fastapi-example
-  interval: 1h
-  secretRef:
-    name: fastapi-example-docker
+# ---
+# apiVersion: image.toolkit.fluxcd.io/v1beta2
+# kind: ImageRepository
+# metadata:
+#   name: fastapi-example
+#   namespace: fastapi-example
+# spec:
+#   image: darioblanco/fastapi-example
+#   interval: 1h
+#   secretRef:
+#     name: fastapi-example-docker
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: fastapi-example
-  namespace: flux-system
+  namespace: fastapi-example
 spec:
   interval: 5m
   url: https://github.com/darioblanco/fastapi-example
