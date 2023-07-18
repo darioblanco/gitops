@@ -16,6 +16,12 @@ creation_rules:
   - path_regex: .*/crossplane/.*.yaml
     encrypted_regex: ^(data|stringData)$
     age: age1v6q8sylunaq9m08rwxq702enmmh9lama7sp47vkcw3z8wm74z39q846s3y
+  # Dev secrets
+  - path_regex: .*/dev/.*secret.yaml
+    age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
+  - path_regex: .*/dev/.*.yaml
+    encrypted_regex: ^(data|stringData)$
+    age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
   # Staging secrets
   - path_regex: .*/staging/.*secret.yaml
     age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
@@ -23,8 +29,8 @@ creation_rules:
     encrypted_regex: ^(data|stringData)$
     age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
   # Production secrets
-  - path_regex: .*/production/.*secret.yaml
+  - path_regex: .*/prod/.*secret.yaml
     age: age1g2wjea9r33l6w0kr6g49yh2tgz3mx6l6dt9a8umaf6fzdkgfsemqmrzxxg
-  - path_regex: .*/production/.*.yaml
+  - path_regex: .*/prod/.*.yaml
     encrypted_regex: ^(data|stringData)$
     age: age1g2wjea9r33l6w0kr6g49yh2tgz3mx6l6dt9a8umaf6fzdkgfsemqmrzxxg
