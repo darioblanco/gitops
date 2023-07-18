@@ -32,7 +32,7 @@ eval set -- "$PARAMS"
 # Check that cluster_name is provided
 if [ -z "$1" ]
 then
-	echo "Error: No kubernetes cluster name provided."
+	print_red "Error: No kubernetes cluster name provided."
 	echo "Usage: $0 [--gitops] <cluster_name> <context-name>"
 	exit 1
 fi
@@ -40,7 +40,7 @@ fi
 # Check that context_name is provided
 if [ -z "$2" ]
 then
-	echo "Error: No kubernetes context name provided."
+	print_red "Error: No kubernetes context name provided."
 	echo "Usage: $0 [--gitops] <cluster_name> <context-name>"
 	exit 1
 fi
@@ -54,9 +54,9 @@ private_key_path="./clusters/${cluster_name}/sops.agekey"
 source .envrc
 
 if [ "$gitops_flag" = true ] ; then
-	# Provision flugs the "gitops" way (https://fluxcd.io/flux/cmd/flux_bootstrap/)
+	# Provision flux the "gitops" way (https://fluxcd.io/flux/cmd/flux_bootstrap/)
 	echo ""
-	echo "Running with --gitops flag."
+	print_blue "Provisioning flux with gitops..."
 	flux bootstrap github \
 	--context="${context_name}" \
 	--owner="${GITHUB_OWNER}" \
@@ -66,7 +66,7 @@ if [ "$gitops_flag" = true ] ; then
 	--path=clusters/"${cluster_name}"
 else
 	echo ""
-	echo "Running without --gitops flag."
+	print_blue "Provisioning flux without gitops..."
 	flux install \
 	--context="${context_name}"
 	flux create source git flux-system \
@@ -82,29 +82,29 @@ fi
 
 if [ ! -f "$private_key_path" ]; then
 	echo ""
-	echo "The private key does not exist in ${private_key_path}."
+	print_yellow "The private key does not exist in ${private_key_path}."
 
 	read -r -p "👉 Do you want to generate a new one? You will later need to update the to update the ./.sops.yaml file with its public key for ${cluster_name} [y/n]: " generate_age_key
 	if [[ $generate_age_key =~ ^[yY] ]]; then
 		age-keygen -o "${private_key_path}"
-		echo "New age key generated in ${private_key_path}, do not forget to update the ./.sops.yaml file with the public key for ${cluster_name}"
+		print_green "New age key generated in ${private_key_path}, do not forget to update the ./.sops.yaml file with the public key for ${cluster_name}"
 	else
-		print_red "Skipped cluster provision, a private key needs to be provided. You might want to set ${private_key_path} with an age key from a password manager or any other external source. "
+		print_yellow "Skipped cluster provision, a private key needs to be provided. You might want to set ${private_key_path} with an age key from a password manager or any other external source. "
 		exit_gracefully
 	fi
 fi
 
 # Provision the key that will be used to decrypt sops secrets
 echo ""
-echo "🔑 Creating private sops-age key for global secret management..."
+print_blue "🔑 Creating private sops-age key for global secret management..."
 
 if kubectl get secret sops-age --context="${context_name}" --namespace=flux-system > /dev/null 2>&1; then
-	echo "Secret 'sops-age' already exists. Skipping creation."
+	print_yellow "Secret 'sops-age' already exists. Skipping creation."
 else
 kubectl create secret generic sops-age \
 	--context="${context_name}" \
 	--namespace=flux-system \
 	--from-file=./clusters/"${cluster_name}"/sops.agekey
-	echo "Secret 'sops-age' created."
+	print_green "Secret 'sops-age' created."
 fi
 echo ""

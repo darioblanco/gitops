@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Get the directory of the current script
+script_dir="$(dirname "${BASH_SOURCE[0]}")"
+
+# shellcheck disable=SC1091
+source "${script_dir}"/utils.sh
+
 # Array of hostnames that are exposed with an ingress
 hostnames=(
 	"auth.local"
@@ -18,9 +24,9 @@ hostnames_str="${hostnames[*]}"
 echo "🚨 Reading/writing to the /etc/hosts requires sudo privileges!"
 # Check if the entry already exists
 if grep -q "$ip $hostnames_str"       /etc/hosts; then
-	echo "The entry $ip $hostnames_str already exists in /etc/hosts"
+	print_yellow "The entry $ip $hostnames_str already exists in /etc/hosts"
 else
   # Append the entry to /etc/hosts
 	echo "$ip       $hostnames_str" | sudo tee -a /etc/hosts
-	echo "Done. $ip $hostnames_str added to /etc/hosts"
+	print_green "Done. $ip $hostnames_str added to /etc/hosts"
 fi
