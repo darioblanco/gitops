@@ -11,5 +11,8 @@ export GITHUB_OWNER=myorg
 export GITHUB_REPO=myrepo
 
 # The list of age secret keys that allow to decrypt sops secrets locally
-SOPS_AGE_KEY_FILE=$(cat ./clusters/crossplane/sops.agekey; echo; cat ./clusters/staging/sops.agekey; echo; cat ./clusters/production/sops.agekey)
-export SOPS_AGE_KEY_FILE
+export SOPS_AGE_KEY_FILE=./clusters/apps-dev/sops.agekey
+
+# It is also possible to provide multiple files in a single one. SOPS will try all the keys until one works.
+# SOPS_AGE_KEY_FILE=$(cat ./clusters/apps-dev/sops.agekey; echo; cat ./clusters/apps-staging/sops.agekey; echo; cat ./clusters/apps-prod/sops.agekey)
+# export SOPS_AGE_KEY_FILE

@@ -1,6 +1,6 @@
 # infrastructure
 
-Infrastructure components for Kubernetes clusters.
+Infrastructure addons for Kubernetes clusters.
 
 ## Monitoring
 

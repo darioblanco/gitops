@@ -3,63 +3,19 @@ SHELL := /usr/bin/env bash
 MAKEFLAGS += --no-builtin-rules
 MAKEFLAGS += --no-builtin-variables
 
-.PHONY: clean \
-		e2e-crossplane e2e-production e2e-staging \
-		gitops-crossplane gitops-production gitops-staging \
-		format flux-ui help hosts init validate
+.PHONY: bootstrap e2e format flux-ui \
+		help hosts init validate wait-apps
 
-clean: init ## clean up all locally created resources
-	kind delete cluster --name crossplane
-	kind delete cluster --name production
-	kind delete cluster --name staging
+bootstrap: init ## create a local dev cluster with kind and bootstrap with flux via gitops
+	./scripts/create-cluster.sh kind apps-dev
+	./scripts/provision-cluster.sh apps-dev kind-apps-dev --gitops
+	@$(MAKE) wait-apps
 
-e2e-crossplane: init ## create a local crossplane cluster with kind and sync with flux without gitops
-	./scripts/create-cluster.sh kind crossplane
-	./scripts/provision-cluster.sh crossplane kind-crossplane
-	kubectl -n flux-system wait kustomization/crossplane-providers --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/crossplane-resources --for=condition=ready --timeout=5m
-
-e2e-production: init ## create a local production cluster with kind and sync with flux without gitops
-	./scripts/create-cluster.sh kind production
-	./scripts/provision-cluster.sh production kind-production
-	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
-	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
-
-e2e-staging: init ## create a local staging cluster with kind and sync with flux without gitops
-	./scripts/create-cluster.sh kind staging
-	./scripts/provision-cluster.sh staging kind-staging
-	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
-	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
-
-gitops-crossplane: init ## create a local crossplane cluster with kind and sync with flux via gitops
-	./scripts/create-cluster.sh kind crossplane
-	./scripts/provision-cluster.sh crossplane kind-crossplane --gitops
-	kubectl -n flux-system wait kustomization/crossplane-providers --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/crossplane-resources --for=condition=ready --timeout=5m
-
-gitops-production: init ## create a local production cluster with kind and sync with flux via gitops
-	./scripts/create-cluster.sh kind production
-	./scripts/provision-cluster.sh production kind-production --gitops
-	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
-	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
-
-gitops-staging: init ## create a local staging cluster with kind and sync with flux via gitops
-	./scripts/create-cluster.sh kind staging
-	./scripts/provision-cluster.sh staging kind-staging --gitops
-	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
-	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m
+e2e: init ## create a local dev cluster with kind, sync with flux without gitops and clean it up after the checks pass
+	./scripts/create-cluster.sh kind apps-dev
+	./scripts/provision-cluster.sh apps-dev kind-apps-dev
+	@$(MAKE) wait-apps
+	kind delete cluster --name apps-dev
 
 format: init ## format yaml and json files
 	prettier --write "**/*.{json,yaml,yml}" --log-level error
@@ -95,3 +51,10 @@ init: ## verify that all the required commands are already installed
 
 validate: init # validate the flux custom resources and kustomize overlays using kubeconform
 	./scripts/validate.sh
+
+wait-apps: init # wait for resources provisioned in the current context app cluster
+	kubectl -n flux-system wait kustomization/addons --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/configs --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
+	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m

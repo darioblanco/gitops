@@ -13,27 +13,37 @@ Run `make help` for a list of commands.
 
 The Git repository contains the following top directories:
 
-- **apps** dir contains Helm releases with a custom configuration per cluster.
-- **clusters** dir contains the Flux configuration per cluster.
-- **infrastructure** dir contains common infra tools such as ingress-nginx and cert-manager.
-- **kind** dir contains kind configurations to create your local clusters for testing. See [kind/README](./kind/README.md).
-- **crossplane** dir contains [Crossplane](https://www.crossplane.io/) definitions. See [crossplane/README](./kind/README.md)
+- [addons](./infrastructure/README.md) common Kubernetes-specific infrastructure tools that are likely to be seen in multiple kubernetes clusters (e.g. `ingress-nginx` or `cert-manager`).
+- [apps](./apps/README.md): `helm` and `kustomize` releases with a custom configuration and selection per environment. They depend on the addons and configs.
+- [clusters](./clusters/README.md): `flux` configuration per Kubernetes cluster that are used for their bootstrapping.
+- [configs]: configurations that depend on the addons before they are provisioned, with unclear scope, or that affect several applications (e.g. a CRD specification).
+- [crossplane](./crossplane/README.md): any cloud resource that does not belong to Kubernetes and is managed via Crossplane.
+- scripts: utilities used by the `Makefile` and CI.
 
 ```text
+├── addons
+│   ├── base
+│   ├── prod
+│   ├── staging
+│   └── dev
 ├── apps
 │   ├── base
-│   ├── production
-│   └── staging
+│   ├── prod
+│   ├── staging
+│   └── dev
 ├── clusters
-│   ├── crossplane
-│   ├── production
-│   └── staging
+│   ├── apps-prod
+│   ├── apps-staging
+│   ├── apps-dev
+│   └── crossplane
+├── configs
+│   ├── base
+│   ├── prod
+│   ├── staging
+│   └── dev
 ├── crossplane
 │   ├── providers
 │   └── resources
-├── infrastructure
-│   ├── configs
-│   └── controllers
 ├── kind
 └── scripts
 ```
@@ -564,6 +574,76 @@ Alternatively, you can decrypt and store the decrypted files with this script:
 ```sh
 $ ./scripts/decrypt.sh secret.enc.yaml
 ✅ Decrypted file saved to secret.yaml
+```
+
+## Run Kubernetes locally
+
+Kind allows you to create production-like Kubernetes cluster in your own computer.
+
+### Creating local Kubernetes clusters
+
+See [creating a cluster](https://kind.sigs.k8s.io/docs/user/quick-start/#creating-a-cluster) in Kind's documentation.
+
+For instance, to create two local clusters
+(`production` and `staging` with the `kind-production` and `kind-staging` contexts respectively)
+
+```sh
+$ kind create cluster --name crossplane --config crossplane.yaml
+$ kind create cluster --name production --config production.yaml
+$ kind create cluster --name staging --config staging.yaml
+$ kind get clusters
+crossplane
+production
+staging
+```
+
+To switch between clusters:
+
+```sh
+# kubectl will connect to the crossplane cluster and create its context
+kubectl cluster-info --context kind-crossplane
+# kubectl will connect to the production cluster and create its context
+kubectl cluster-info --context kind-production
+# kubectl will connect to the staging cluster and create its context
+kubectl cluster-info --context kind-staging
+```
+
+To view the available contexts:
+
+```sh
+$ kubectl config get-contexts
+CURRENT   NAME           CLUSTER        AUTHINFO       NAMESPACE
+*         kind-staging   kind-staging   kind-staging   flux-system
+```
+
+Alternatively, you can use a tool like `kubectx` to manage contexts (`brew install kubectx`):
+
+```sh
+$ kubectx
+kind-crossplane
+kind-production
+kind-staging
+$ kubectx kind-production
+Switched to context "kind-production".
+```
+
+### Accessing a local cluster
+
+You can access the cluster using `kubectl`. Make sure you have selected the proper context.
+
+For instance:
+
+```sh
+kubectx kind-staging
+kubectl get namespaces
+```
+
+### Deleting a local cluster
+
+To delete a `kind` cluster:
+
+```sh
+kind delete cluster --name myname
 ```
 
 ## References

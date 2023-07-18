@@ -3,10 +3,10 @@ name: e2e
 on:
   push:
     paths:
-      - "apps/base/**"
-      - "apps/staging/**"
-      - "clusters/staging/**"
-      - "infrastructure/**"
+      - "addons/**"
+      - "apps/**"
+      - "configs/**"
+      - "clusters/apps-dev/**"
       - ".github/workflows/e2e.yaml"
     branches: ["*"]
     tags-ignore: ["*"]
@@ -24,7 +24,6 @@ jobs:
         uses: helm/kind-action@v1.8.0
         with:
           cluster_name: staging
-          config: kind/staging.yaml
       - name: Install Flux in Kubernetes Kind
         run: flux install
       - name: Setup cluster reconciliation
@@ -32,11 +31,11 @@ jobs:
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --ignore-paths=clusters/staging/flux-system/
+          --ignore-paths=clusters/apps-dev/flux-system/
 
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/staging
+          --path=./clusters/apps-dev
 
           echo "$E2E_AGEKEY" | kubectl create secret generic sops-age \
             --namespace=flux-system \
@@ -45,8 +44,8 @@ jobs:
           E2E_AGEKEY: ${{ secrets.E2E_AGEKEY }}
       - name: Verify infrastructure reconciliation
         run: |
-          kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
-          kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait kustomization/addons --for=condition=ready --timeout=5m
+          kubectl -n flux-system wait kustomization/configs --for=condition=ready --timeout=5m
           kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
       - name: Verify app reconciliation
         run: |

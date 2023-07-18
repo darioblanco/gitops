@@ -39,7 +39,7 @@ if kind get clusters | grep -q "${cluster_name}"; then
 else
 	print_magenta "Cluster '${cluster_name}' does not exist. It will be created."
 	# Create the cluster
-	kind create cluster --name "${cluster_name}" --config kind/"${cluster_name}".yaml
+	kind create cluster --name "${cluster_name}" --config "${script_dir}"/../kind.medium.yaml
 	print_green "Created kind cluster '${cluster_name}'"
 fi
 
