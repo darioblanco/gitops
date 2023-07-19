@@ -19,4 +19,3 @@ nodes:
         hostPort: 4430
         protocol: TCP
   - role: worker
-  - role: worker
