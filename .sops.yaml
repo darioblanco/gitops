@@ -24,13 +24,13 @@ creation_rules:
     age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
   # Staging secrets
   - path_regex: .*/staging/.*secret.yaml
-    age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
+    age: age1fapwknfa6lm0rmpxe4dkuyjpcz9wwju73ghw53f74yqjhrevtyxs43h2yg
   - path_regex: .*/staging/.*.yaml
     encrypted_regex: ^(data|stringData)$
-    age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
+    age: age1fapwknfa6lm0rmpxe4dkuyjpcz9wwju73ghw53f74yqjhrevtyxs43h2yg
   # Production secrets
   - path_regex: .*/prod/.*secret.yaml
-    age: age1g2wjea9r33l6w0kr6g49yh2tgz3mx6l6dt9a8umaf6fzdkgfsemqmrzxxg
+    age: age1us3r24et6a5kn8e4plqtvghchpuyj56n7errv72stqhgxq2l8dhsrem3u7
   - path_regex: .*/prod/.*.yaml
     encrypted_regex: ^(data|stringData)$
-    age: age1g2wjea9r33l6w0kr6g49yh2tgz3mx6l6dt9a8umaf6fzdkgfsemqmrzxxg
+    age: age1us3r24et6a5kn8e4plqtvghchpuyj56n7errv72stqhgxq2l8dhsrem3u7

@@ -1,4 +1,4 @@
-# infrastructure
+# addons
 
 Infrastructure addons for Kubernetes clusters.
 
