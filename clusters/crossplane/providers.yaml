@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./crossplane/providers
+  path: ./cloud/providers
   prune: true
   wait: true
   timeout: 5m0s

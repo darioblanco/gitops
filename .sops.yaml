@@ -11,9 +11,9 @@
 # creation rules are evaluated sequentially, the first match wins
 creation_rules:
   # Crossplane secrets
-  - path_regex: .*/crossplane/.*secret.yaml
+  - path_regex: .*/cloud/.*secret.yaml
     age: age1v6q8sylunaq9m08rwxq702enmmh9lama7sp47vkcw3z8wm74z39q846s3y
-  - path_regex: .*/crossplane/.*.yaml
+  - path_regex: .*/cloud/.*.yaml
     encrypted_regex: ^(data|stringData)$
     age: age1v6q8sylunaq9m08rwxq702enmmh9lama7sp47vkcw3z8wm74z39q846s3y
   # Dev secrets

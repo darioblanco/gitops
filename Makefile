@@ -53,8 +53,8 @@ validate: init # validate the flux custom resources and kustomize overlays using
 	./scripts/validate.sh
 
 wait-apps: init # wait for resources provisioned in the current context app cluster
-	kubectl -n flux-system wait kustomization/addons --for=condition=ready --timeout=5m
-	kubectl -n flux-system wait kustomization/configs --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/infra-controllers --for=condition=ready --timeout=5m
+	kubectl -n flux-system wait kustomization/infra-configs --for=condition=ready --timeout=5m
 	kubectl -n flux-system wait kustomization/apps --for=condition=ready --timeout=5m
 	kubectl -n flux-system wait kustomization/fastapi-example --for=condition=ready --timeout=5m
 	kubectl -n podinfo wait helmrelease/podinfo --for=condition=ready --timeout=5m

@@ -1,15 +1,24 @@
-# Crossplane
+# Cloud
 
 ## Folder structure
 
 The folder contains the following top directories:
 
-- **providers** dir contains Crossplane [providers](https://docs.crossplane.io/v1.12/concepts/providers/)
+- `providers` contains Crossplane [providers](https://docs.crossplane.io/v1.12/concepts/providers/)
 - **resources** dir contains Crossplane [managed resources](https://docs.crossplane.io/v1.12/concepts/managed-resources/) and [composite resources](https://docs.crossplane.io/v1.12/concepts/composition/).
 
 ```text
-├── providers
-└── resources
+└── cloud
+    ├── providers
+    │   ├── base
+    │   ├── dev
+    │   ├── prod
+    │   └── staging
+    └── resources
+        ├── base
+        ├── dev
+        ├── prod
+        └── staging
 ```
 
 ## Prerequisites

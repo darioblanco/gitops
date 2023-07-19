@@ -12,6 +12,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./crossplane/resources
+  path: ./cloud/resources
   prune: true
   wait: true
