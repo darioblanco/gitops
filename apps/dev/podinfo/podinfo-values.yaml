@@ -9,10 +9,3 @@ spec:
       version: ">=1.0.0-alpha"
   test:
     enable: false
-  values:
-    ingress:
-      hosts:
-        - host: podinfo.local
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
