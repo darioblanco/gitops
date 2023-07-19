@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./cloud/providers
+  path: ./cloud/providers/base
   prune: true
   wait: true
   timeout: 5m0s

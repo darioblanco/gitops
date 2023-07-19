@@ -12,6 +12,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./cloud/resources
+  path: ./cloud/resources/base
   prune: true
   wait: true

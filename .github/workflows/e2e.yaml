@@ -3,10 +3,9 @@ name: e2e
 on:
   push:
     paths:
-      - "addons/**"
       - "apps/**"
-      - "configs/**"
       - "clusters/apps-dev/**"
+      - "infrastructure/**"
       - ".github/workflows/e2e.yaml"
     branches: ["*"]
     tags-ignore: ["*"]
