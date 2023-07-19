@@ -22,7 +22,8 @@ jobs:
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.8.0
         with:
-          cluster_name: staging
+          cluster_name: apps-dev
+          config: kind.config.yaml
       - name: Install Flux in Kubernetes Kind
         run: flux install
       - name: Setup cluster reconciliation
