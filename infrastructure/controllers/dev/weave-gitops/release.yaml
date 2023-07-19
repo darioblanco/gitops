@@ -12,3 +12,9 @@ spec:
   valuesFrom:
     - kind: Secret
       name: weave-gitops
+  values:
+    hosts:
+      - host: flux.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
