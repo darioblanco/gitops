@@ -211,6 +211,21 @@ kubectx kind-staging
 kubectl get namespaces
 ```
 
+### Using the ingress from a local cluster
+
+Due to current limitations with `kind`, the local port in which you can access the
+ingress controller from the cluster might vary, depending on the node in which
+the `ingress-nginx` controller ends up.
+
+You can check the forwarded ports in `kind.config.yaml`.
+
+In addition, to ease the management of virtual hostnames you can run `make hosts`, which
+will add entries from the exposed services in the cluster into your `/etc/hosts` file.
+Once added, you can browse <http://{serviceName}.local:8080> (or port 8081, 8082, depending on the
+worker node in which the `ingress-nginx` controller is).
+
+For instance: <http://podinfo.local:8080>
+
 ### Deleting a local cluster
 
 To delete a `kind` cluster:
