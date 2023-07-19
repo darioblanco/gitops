@@ -21,8 +21,8 @@ spec:
       service:
         type: NodePort
       watchIngressWithoutClass: true
-      nodeSelector:
-        ingress-ready: "true"
+      # nodeSelector:
+      #   ingress-ready: "true"
       #     tolerations:
       #       - key: "node-role.kubernetes.io/master"
       #         operator: "Equal"

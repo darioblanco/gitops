@@ -2,23 +2,11 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
   - role: control-plane
-    kubeadmConfigPatches:
-      - |
-        kind: InitConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "ingress-ready=true"
     extraPortMappings:
       - containerPort: 6443
         hostPort: 6443
         listenAddress: "127.0.0.1"
   - role: worker
-    kubeadmConfigPatches:
-      - |
-        kind: InitConfiguration
-        nodeRegistration:
-          kubeletExtraArgs:
-            node-labels: "ingress-ready=true"
     extraPortMappings:
       - containerPort: 80
         hostPort: 8080
@@ -26,4 +14,3 @@ nodes:
       - containerPort: 443
         hostPort: 4430
         protocol: TCP
-  - role: worker
