@@ -58,12 +58,14 @@ if [ "$gitops_flag" = true ] ; then
 	echo ""
 	print_blue "Provisioning flux with gitops..."
 	flux bootstrap github \
+	--branch=main \
+	--components-extra=image-reflector-controller,image-automation-controller \
 	--context="${context_name}" \
 	--owner="${GITHUB_OWNER}" \
-	--repository="${GITHUB_REPO}" \
-	--branch=main \
+	--path=clusters/"${cluster_name}" \
 	--personal \
-	--path=clusters/"${cluster_name}"
+	--read-write-key \
+	--repository="${GITHUB_REPO}"
 else
 	echo ""
 	print_blue "Provisioning flux without gitops..."
