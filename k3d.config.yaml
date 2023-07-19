@@ -1,0 +1,11 @@
+apiVersion: k3d.io/v1alpha2
+kind: Cluster
+nodes:
+  - role: server
+    count: 1
+    kubernetesVersion: latest
+    extraPortMappings:
+      - containerPort: 6443
+        hostPort: 6443
+  - role: agent
+    count: 3

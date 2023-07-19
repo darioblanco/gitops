@@ -26,23 +26,41 @@ fi
 cluster_type="$1"
 cluster_name="$2"
 
-# Check if cluster type is "kind" (the only supported type at the moment)
-if [ "$cluster_type" != "kind" ]
-then
-  print_red "Error: Unsupported cluster type. Only 'kind' is supported."
-  exit 1
-fi
+context_name=""
+case "$cluster_type" in
+	kind)
+		print_blue "Creating kind cluster '${cluster_name}'..."
+		if kind get clusters | grep -q "${cluster_name}"; then
+			print_yellow "Cluster '${cluster_name}' already exists. Context will be switched to the current cluster."
+		else
+			print_magenta "Cluster '${cluster_name}' does not exist. It will be created."
+			# Create the cluster using the configuration file
+			kind create cluster --name "${cluster_name}" --config "${script_dir}"/../kind.config.yaml
+			print_green "Created kind cluster '${cluster_name}'"
+		fi
+		context_name="kind-${cluster_name}"
+	;;
 
-echo ""
-if kind get clusters | grep -q "${cluster_name}"; then
-	print_yellow "Cluster '${cluster_name}' already exists. Context will be switched to the current cluster."
-else
-	print_magenta "Cluster '${cluster_name}' does not exist. It will be created."
-	# Create the cluster
-	kind create cluster --name "${cluster_name}" --config "${script_dir}"/../kindconfig.yaml
-	print_green "Created kind cluster '${cluster_name}'"
-fi
+	k3d)
+		print_blue "Creating k3d cluster '${cluster_name}'..."
+		if k3d cluster list | grep -q "${cluster_name}"; then
+			print_yellow "Cluster '${cluster_name}' already exists. Context will be switched to the current cluster."
+		else
+			print_magenta "Cluster '${cluster_name}' does not exist. It will be created."
+			# Create the cluster using the configuration file
+			k3d cluster create --config "${script_dir}"/../k3d.config.yaml "${cluster_name}"
+			print_green "Created k3d cluster '${cluster_name}'"
+		fi
+		context_name="k3d-${cluster_name}"
+	;;
+
+	*)
+		# Unsupported cluster types
+		print_red "Error: Unsupported cluster type. Only 'kind' and 'k3d' are supported."
+		exit 1
+	;;
+esac
 
 # Get cluster info so that the context is defined
 echo ""
-kubectl cluster-info --context kind-"${cluster_name}"
+kubectl cluster-info --context "${context_name}"
