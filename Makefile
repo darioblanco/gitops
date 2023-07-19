@@ -11,6 +11,9 @@ bootstrap: init ## create a local dev cluster with kind and bootstrap with flux 
 	./scripts/provision-cluster.sh apps-dev kind-apps-dev --gitops
 	@$(MAKE) wait-apps
 
+clean: ## remove any locally created test resources
+	kind delete cluster --name apps-dev
+
 e2e: init ## create a local dev cluster with kind, sync with flux without gitops and clean it up after the checks pass
 	./scripts/create-cluster.sh kind apps-dev
 	./scripts/provision-cluster.sh apps-dev kind-apps-dev
