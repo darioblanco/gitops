@@ -12,6 +12,7 @@ hostnames=(
 	"flux.local"
 	"fastapi-example.local"
 	"grafana.local"
+	"podinfo.local"
 	"prometheus.local"
 )
 
