@@ -12,7 +12,7 @@ spec:
   values:
     ingress:
       hosts:
-        - host: podinfo
+        - host: podinfo.local
           paths:
             - path: /
               pathType: ImplementationSpecific
