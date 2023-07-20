@@ -70,6 +70,7 @@ else
 	echo ""
 	print_blue "Provisioning flux without gitops..."
 	flux install \
+	--components-extra=image-reflector-controller,image-automation-controller \
 	--context="${context_name}"
 	flux create source git flux-system \
 	--context="${context_name}" \

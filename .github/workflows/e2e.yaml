@@ -25,7 +25,7 @@ jobs:
           cluster_name: apps-dev
           config: kind.config.yaml
       - name: Install Flux in Kubernetes Kind
-        run: flux install
+        run: flux install --components-extra=image-reflector-controller,image-automation-controller
       - name: Setup cluster reconciliation
         run: |
           flux create source git flux-system \
