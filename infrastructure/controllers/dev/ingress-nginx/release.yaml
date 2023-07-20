@@ -34,7 +34,7 @@ spec:
         enabled: false
       extraArgs:
         publish-status-address: localhost
-      resources:
-        limits:
-          cpu: 100m
-          memory: 90Mi
+      # resources:
+      #   limits:
+      #     cpu: 100m
+      #     memory: 90Mi
