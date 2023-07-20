@@ -1,11 +1,11 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta2
 kind: ImagePolicy
 metadata:
-  name: podinfo
+  name: fastapi-example
   namespace: flux-system
 spec:
   imageRepositoryRef:
-    name: podinfo
+    name: fastapi-example
   filterTags:
     pattern: "^main-[a-fA-F0-9]+-(?P<ts>.*)"
     extract: "$ts"
