@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - ../base/cert-manager
   - ../base/weave-gitops
-  - receiver-secret.enc.yaml
-  - receiver.yaml
+  - flux-receivers
+  - docker-secret.enc.yaml

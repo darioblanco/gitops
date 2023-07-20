@@ -7,4 +7,4 @@ spec:
   image: ghcr.io/darioblanco/fastapi-example
   interval: 1h
   secretRef:
-    name: fastapi-example-docker
+    name: github-docker

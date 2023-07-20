@@ -5,5 +5,4 @@ resources:
   - gitrepository.yaml
   - imagerepository.yaml
   - controller.yaml
-  - receiver.yaml
   - imagepolicy.yaml
