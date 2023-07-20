@@ -3,6 +3,9 @@ kind: Kustomization
 resources:
   - ../../base/fastapi-example
 patches:
-  - path: fastapi-example-values.yaml
+  - path: controller.yaml
     target:
       kind: Kustomization
+  - path: imageupdateautomation.yaml
+    target:
+      kind: ImageUpdateAutomation

@@ -6,3 +6,4 @@ resources:
   - imagerepository.yaml
   - controller.yaml
   - imagepolicy.yaml
+  - imageupdateautomation.yaml

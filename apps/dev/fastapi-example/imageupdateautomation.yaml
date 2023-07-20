@@ -1,0 +1,8 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: fastapi-example
+  namespace: flux-system
+spec:
+  update:
+    path: ./deploy/dev
