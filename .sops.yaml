@@ -11,25 +11,25 @@
 # creation rules are evaluated sequentially, the first match wins
 creation_rules:
   # Crossplane secrets
-  - path_regex: .*/cloud/.*secret.yaml
+  - path_regex: .*/cloud/.*values-secret.yaml
     age: age1v6q8sylunaq9m08rwxq702enmmh9lama7sp47vkcw3z8wm74z39q846s3y
   - path_regex: .*/cloud/.*.yaml
     encrypted_regex: ^(data|stringData)$
     age: age1v6q8sylunaq9m08rwxq702enmmh9lama7sp47vkcw3z8wm74z39q846s3y
   # Dev secrets
-  - path_regex: .*dev/.*secret.yaml
+  - path_regex: .*dev/.*values-secret.yaml
     age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
   - path_regex: .*dev/.*.yaml
     encrypted_regex: ^(data|stringData)$
     age: age1qvesyd4zyqs5p40n8gr2ngjvsg6surf9e37h3xv7rm7m5lsgz5jsetg3ql
   # Staging secrets
-  - path_regex: .*staging/.*secret.yaml
+  - path_regex: .*staging/.*values-secret.yaml
     age: age1fapwknfa6lm0rmpxe4dkuyjpcz9wwju73ghw53f74yqjhrevtyxs43h2yg
   - path_regex: .*staging/.*.yaml
     encrypted_regex: ^(data|stringData)$
     age: age1fapwknfa6lm0rmpxe4dkuyjpcz9wwju73ghw53f74yqjhrevtyxs43h2yg
   # Production secrets
-  - path_regex: .*prod/.*secret.yaml
+  - path_regex: .*prod/.*values-secret.yaml
     age: age1us3r24et6a5kn8e4plqtvghchpuyj56n7errv72stqhgxq2l8dhsrem3u7
   - path_regex: .*prod/.*.yaml
     encrypted_regex: ^(data|stringData)$
