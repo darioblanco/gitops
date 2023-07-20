@@ -8,3 +8,5 @@ spec:
   url: https://github.com/darioblanco/fastapi-example
   ref:
     branch: main
+  secretRef:
+    name: fastapi-example
