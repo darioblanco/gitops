@@ -9,4 +9,4 @@ spec:
   ref:
     branch: main
   secretRef:
-    name: fastapi-example
+    name: fastapi-example-repo
