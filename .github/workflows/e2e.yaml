@@ -31,7 +31,7 @@ jobs:
           flux create source git flux-system \
           --url=${{ github.event.repository.html_url }} \
           --branch=${GITHUB_REF#refs/heads/} \
-          --ignore-paths=clusters/apps-dev/flux-system/
+          --ignore-paths=clusters/**/flux-system/
 
           flux create kustomization flux-system \
           --source=flux-system \
