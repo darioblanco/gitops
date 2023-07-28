@@ -72,7 +72,7 @@ spec:
             class: nginx
 ```
 
-In `clusters/apps-prod/infrastructure.yaml` we replace the Let's Encrypt server value to point to the production API:
+In `clusters/prod/infrastructure.yaml` we replace the Let's Encrypt server value to point to the production API:
 
 ```yaml
 apiVersion: kustomize.toolkit.fluxcd.io/v1

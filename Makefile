@@ -7,18 +7,18 @@ MAKEFLAGS += --no-builtin-variables
 		help hosts init validate wait-apps
 
 bootstrap: init ## create a local dev cluster with kind and bootstrap with flux via gitops
-	./scripts/create-cluster.sh kind apps-dev
-	./scripts/provision-cluster.sh apps-dev kind-apps-dev --gitops
+	./scripts/create-cluster.sh kind dev
+	./scripts/provision-cluster.sh dev kind-dev --gitops
 	@$(MAKE) wait-apps
 
 clean: ## remove any locally created test resources
-	kind delete cluster --name apps-dev
+	kind delete cluster --name dev
 
 e2e: init ## create a local dev cluster with kind, sync with flux without gitops and clean it up after the checks pass
-	./scripts/create-cluster.sh kind apps-dev
-	./scripts/provision-cluster.sh apps-dev kind-apps-dev
+	./scripts/create-cluster.sh kind dev
+	./scripts/provision-cluster.sh dev kind-dev
 	@$(MAKE) wait-apps
-	kind delete cluster --name apps-dev
+	kind delete cluster --name dev
 
 format: init ## format yaml and json files
 	prettier --write "**/*.{json,yaml,yml}" --log-level error

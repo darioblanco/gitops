@@ -6,18 +6,18 @@ The clusters dir contains the following Flux configuration structure:
 
 ```text
 ./clusters/
-├── apps-dev
+├── dev
 │   ├── apps.yaml
+│   ├── cloud.yaml
 │   └── infrastructure.yaml
-├── apps-prod
+├── prod
 │   ├── apps.yaml
+│   ├── cloud.yaml
 │   └── infrastructure.yaml
-├── apps-staging
-│   ├── apps.yaml
-│   └── infrastructure.yaml
-└── crossplane
-    ├── providers.yaml
-    └── resources.yaml
+└── staging
+    ├── apps.yaml
+│   ├── cloud.yaml
+    └── infrastructure.yaml
 ```
 
 In **clusters/staging/** dir we have the Flux Kustomization definitions, for example:

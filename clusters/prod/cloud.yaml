@@ -1,0 +1,33 @@
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: cloud-providers
+#   namespace: flux-system
+# spec:
+#   interval: 10m0s
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   path: ./cloud/providers/prod
+#   prune: true
+#   wait: true
+#   timeout: 5m0s
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: cloud-resources
+#   namespace: flux-system
+# spec:
+#   interval: 1h
+#   dependsOn:
+#     - name: cloud-providers
+#   retryInterval: 1m
+#   timeout: 5m
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   path: ./cloud/resources/prod
+#   prune: true
+#   wait: true

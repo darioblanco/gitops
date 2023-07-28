@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "apps/**"
-      - "clusters/apps-dev/**"
+      - "clusters/dev/**"
       - "infrastructure/**"
       - ".github/workflows/e2e.yaml"
     branches: ["*"]
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Kubernetes
         uses: helm/kind-action@v1.8.0
         with:
-          cluster_name: apps-dev
+          cluster_name: dev
           config: kind.config.yaml
       - name: Install Flux in Kubernetes Kind
         run: flux install --components-extra=image-reflector-controller,image-automation-controller
@@ -35,7 +35,7 @@ jobs:
 
           flux create kustomization flux-system \
           --source=flux-system \
-          --path=./clusters/apps-dev
+          --path=./clusters/dev
 
           echo "$E2E_AGEKEY" | kubectl create secret generic sops-age \
             --namespace=flux-system \

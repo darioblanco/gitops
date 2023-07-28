@@ -9,13 +9,44 @@ Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](http
 
 Run `make help` for a list of commands.
 
+## Architecture
+
+The idea is to have a single Kubernetes cluster for everything
+(e.g. your applications, infrastructure that support them and cloud configuration)
+but in different environments, so changes can be thoroughly testing locally in a
+dev environment or in your cloud provider of choice, using a `staging` environment.
+
+Therefore, the `./clusters` folder hold the flux resources with kustomize that will
+bootstrap each environment cluster. Those resources point to the respective `./apps`, `./cloud` and
+`./infrastructure` folders respectively:
+
+```mermaid
+  graph LR;
+      ./clusters-->./apps
+      ./clusters-->./cloud
+      ./clusters-->./infrastructure
+```
+
+Each cluster bootstraps those components in the following order:
+
+```mermaid
+  graph LR;
+      cloud-providers-->cloud-resources
+      infra-controllers-->infra-configs
+      infra-configs-->apps
+```
+
+Once the components are bootstrapped, they will reconcile with the folders from the
+repo they point at, to keep the configuration from git consistent with the state
+of the cluster, which is the essence of GitOps.
+
 ## Repository structure
 
 The Git repository contains the following top directories:
 
 - [apps](./apps/README.md): `helm` and `kustomize` releases with a custom configuration and selection per environment. They depend on the addons and configs.
 - [cloud](./cloud/README.md): any cloud resource that does not belong to Kubernetes and is managed via Crossplane.
-- [clusters](./clusters/README.md): `flux` configuration per Kubernetes cluster that are used for their bootstrapping.
+- [clusters](./clusters/README.md): `flux` configuration per Kubernetes cluster environment that are used for their bootstrapping.
 - [infrastructure](./infrastructure/README.md) common Kubernetes-specific infrastructure tools that are likely to be seen in multiple kubernetes clusters (e.g. `ingress-nginx` or `cert-manager`), and its configurations.
 - scripts: utilities used by the `Makefile` and CI.
 
@@ -37,10 +68,9 @@ The Git repository contains the following top directories:
 │       ├── prod
 │       └── staging
 ├── clusters
-│   ├── apps-dev
-│   ├── apps-prod
-│   ├── apps-staging
-│   └── crossplane
+│   ├── dev
+│   ├── prod
+│   └── staging
 ├── infrastructure
 │   ├── configs
 │   │   ├── base
@@ -63,7 +93,7 @@ a pull requests is merged into the main branch and synced on the cluster.
 This repository contains the following GitHub CI workflows:
 
 - the [validate](./.github/workflows/validate.yaml) workflow validates the Kubernetes manifests and Kustomize overlays with [kubeconform](https://github.com/yannh/kubeconform)
-- the [e2e](./.github/workflows/e2e.yaml) workflow starts a Kubernetes cluster in CI and tests the `dev` setup (`apps-dev`) by running Flux in Kubernetes Kind.
+- the [e2e](./.github/workflows/e2e.yaml) workflow starts a Kubernetes cluster in CI and tests the `dev` setup (`dev`) by running Flux in Kubernetes Kind.
 
 ## Secrets
 
@@ -84,9 +114,9 @@ You can generate a key like this:
 
 ```sh
 # One key per file
-age-keygen > clusters/apps-dev/sops.agekey
+age-keygen > clusters/dev/sops.agekey
 # You can also append multiple keys to a single file, that also works
-age-keygen >> clusters/apps-dev/sops.agekey
+age-keygen >> clusters/dev/sops.agekey
 ```
 
 You should have a file there with a format like this:
