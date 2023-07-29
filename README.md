@@ -85,6 +85,21 @@ The Git repository contains the following top directories:
 └── scripts
 ```
 
+## Prerequisites
+
+You can see the tooling needed to develop with this repository in the Makefile's `init` target.
+Run `make init` to make sure that all prerequisites are fulfilled, and feel free to remove
+prerequisites based on your personal needs.
+
+- `age-keygen`: to provide an encryption backend to `sops` for securing secrets in the git repository.
+- `flux`: the core requirement to enable GitOps in a Kubernetes cluster.
+- `kind`: to provision a local Kubernetes cluster for testing.
+- `kubeconform`: to lint Kubernetes manifests.
+- `kubectl`: to interact with a Kubernetes cluster.
+- `prettier`: to automatically format YAML and JSON files and ensure their style consistency.
+- `sops`: to allow Flux the encryption and decryption of secrets.
+- `yq`: to validate and interact with YAML files via the command line.
+
 ## Testing
 
 Any change to the Kubernetes manifests or to the repository structure should be validated in CI before
