@@ -7,6 +7,8 @@
 
 Apply GitOps to everything with [Flux](https://fluxcd.io/) and [Crossplane](https://www.crossplane.io/).
 
+See my blogpost [Streamline Kubernetes Management: GitOps with Flux and Kustomize](https://medium.com/@dariobit/streamline-kubernetes-management-gitops-with-flux-and-kustomize-52300168c1c8) for more details.
+
 Run `make help` for a list of commands.
 
 ## Architecture
@@ -203,12 +205,12 @@ Kind allows you to create production-like Kubernetes cluster in your own compute
 See [creating a cluster](https://kind.sigs.k8s.io/docs/user/quick-start/#creating-a-cluster) in Kind's documentation.
 
 For instance, to create two local clusters
-(`production` and `staging` with the `kind-production` and `kind-staging` contexts respectively)
+(`production` and `staging` with the `kind-prod` and `kind-staging` contexts respectively)
 
 ```sh
-$ kind create cluster --name crossplane --config crossplane.yaml
-$ kind create cluster --name production --config production.yaml
-$ kind create cluster --name staging --config staging.yaml
+$ kind create cluster --name crossplane --config kind.config.yaml
+$ kind create cluster --name production --config kind.config.yaml
+$ kind create cluster --name staging --config kind.config.yaml
 $ kind get clusters
 crossplane
 production
@@ -221,7 +223,7 @@ To switch between clusters:
 # kubectl will connect to the crossplane cluster and create its context
 kubectl cluster-info --context kind-crossplane
 # kubectl will connect to the production cluster and create its context
-kubectl cluster-info --context kind-production
+kubectl cluster-info --context kind-prod
 # kubectl will connect to the staging cluster and create its context
 kubectl cluster-info --context kind-staging
 ```
@@ -239,10 +241,10 @@ Alternatively, you can use a tool like `kubectx` to manage contexts (`brew insta
 ```sh
 $ kubectx
 kind-crossplane
-kind-production
+kind-prod
 kind-staging
-$ kubectx kind-production
-Switched to context "kind-production".
+$ kubectx kind-prod
+Switched to context "kind-prod".
 ```
 
 ### Accessing a local cluster

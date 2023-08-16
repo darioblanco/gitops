@@ -108,7 +108,7 @@ $ curl -H "Host: podinfo.staging" http://localhost:8080
 ```
 
 Bootstrap Flux on production by setting the context and path to your production cluster
-(use `kind-production` in the context flag if running a cluster locally with kind):
+(use `kind-prod` in the context flag if running a cluster locally with kind):
 
 ```sh
 flux bootstrap github \
