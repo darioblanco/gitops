@@ -20,7 +20,7 @@ jobs:
       - name: Setup Flux
         uses: fluxcd/flux2/action@main
       - name: Setup Kubernetes
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@v1.9.0
         with:
           cluster_name: dev
           config: kind.config.yaml
